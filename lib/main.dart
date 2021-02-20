@@ -148,55 +148,91 @@ class _MyHomePageState extends State<MyHomePage>
               children: [
                 Row(
                   children: [
-                    Icon(Icons.sports_soccer),
+                    Image.asset(
+                      'assets/1-finalizaçãoIcon1.png',
+                      height: 25,
+                      width: 25,
+                    ),
                     new Text("Chute"),
                   ],
                 ),
                 Row(
                   children: [
-                    Icon(Icons.sports_soccer),
+                    Image.asset(
+                      'assets/2-PasseIcon2.png',
+                      height: 25,
+                      width: 25,
+                    ),
                     new Text("Passe"),
                   ],
                 ),
                 Row(
                   children: [
-                    Icon(Icons.sports_soccer),
-                    new Text("Chute ao Gol"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.sports_soccer),
+                    Image.asset(
+                      'assets/3-desarmeIcon1.png',
+                      height: 25,
+                      width: 25,
+                    ),
                     new Text("Desarme"),
                   ],
                 ),
                 Row(
                   children: [
-                    Icon(Icons.sports_soccer),
-                    new Text("Cartão Vermelho"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.sports_soccer),
-                    new Text("Cartão Amarelo"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.sports_soccer),
+                    Image.asset(
+                      'assets/golIcon1.png',
+                      height: 25,
+                      width: 25,
+                    ),
                     new Text("Gol"),
                   ],
                 ),
                 Row(
                   children: [
-                    Icon(Icons.sports_soccer),
+                    Image.asset(
+                      'assets/assistenciaIcon3.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Assistência"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/yellowCard_Normal.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Cartão Vermelho"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/redCard_Normal.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Cartão Amarelo"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/undoButton.png',
+                      height: 25,
+                      width: 25,
+                    ),
                     new Text("Começa e pausa o cronômetro"),
                   ],
                 ),
                 Row(
                   children: [
-                    Icon(Icons.sports_soccer),
+                    Image.asset(
+                      'assets/undoButton.png',
+                      height: 25,
+                      width: 25,
+                    ),
                     new Text("Reseta cronômetro"),
                   ],
                 ),
@@ -271,6 +307,10 @@ class _MyHomePageState extends State<MyHomePage>
                           image: AssetImage(imageRedA),
                         ),
                         color: Colors.white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/1-finalizaçãoIcon1.png'),
+                    ),
                   ),
                 ),
               ),
@@ -284,7 +324,7 @@ class _MyHomePageState extends State<MyHomePage>
                   onTapDown: (_) {
                     setState(() {
                       imageRedB = 'assets/pressedButton_Red.png';
-                      timeline.insert(0, 'Disarme');
+                      timeline.insert(0, 'Desarme');
                       timelineColor.insert(0, red);
                       timestamps.insert(0, '$minutesStr:$secondsStr');
                     });
@@ -302,6 +342,10 @@ class _MyHomePageState extends State<MyHomePage>
                         image: AssetImage(imageRedB),
                       ),
                       //color: Colors.white
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/3-desarmeIcon1.png'),
                     ),
                   ),
                 ),
@@ -334,6 +378,10 @@ class _MyHomePageState extends State<MyHomePage>
                       ),
                       //color: Colors.white
                     ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/4-dribleIcon2.png'),
+                    ),
                   ),
                 ),
               ),
@@ -364,6 +412,10 @@ class _MyHomePageState extends State<MyHomePage>
                         image: AssetImage(imageRedD),
                       ),
                       //color: Colors.white
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/2-PasseIcon2.png'),
                     ),
                   ),
                 ),
@@ -396,6 +448,10 @@ class _MyHomePageState extends State<MyHomePage>
                       ),
                       //color: Colors.white
                     ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/1-finalizaçãoIcon1.png'),
+                    ),
                   ),
                 ),
               ),
@@ -426,6 +482,10 @@ class _MyHomePageState extends State<MyHomePage>
                         image: AssetImage(imageGreenB),
                       ),
                       //color: Colors.white
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/3-desarmeIcon1.png'),
                     ),
                   ),
                 ),
@@ -458,6 +518,10 @@ class _MyHomePageState extends State<MyHomePage>
                       ),
                       //color: Colors.white
                     ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/4-dribleIcon2.png'),
+                    ),
                   ),
                 ),
               ),
@@ -488,6 +552,10 @@ class _MyHomePageState extends State<MyHomePage>
                         image: AssetImage(imageGreenD),
                       ),
                       //color: Colors.white
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/2-PasseIcon2.png'),
                     ),
                   ),
                 ),
@@ -564,7 +632,7 @@ class _MyHomePageState extends State<MyHomePage>
                   onTapDown: (_) {
                     setState(() {
                       imageEspecial1 = 'assets/pressedButton_Special.png';
-                      timeline.insert(0, 'Gol !!!');
+                      timeline.insert(0, 'Gol');
                       timelineColor.insert(0, green);
                       timestamps.insert(0, '$minutesStr:$secondsStr');
                     });
@@ -582,6 +650,10 @@ class _MyHomePageState extends State<MyHomePage>
                       ),
                       //color: Colors.white
                     ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/golIcon1.png'),
+                    ),
                   ),
                 ),
               ),
@@ -594,7 +666,10 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapDown: (_) {
                     setState(() {
-                      imageEspecial2 = 'assets/pressedButton_Special.png';
+                      imageEspecial1 = 'assets/pressedButton_Special.png';
+                      timeline.insert(0, 'Assistência');
+                      timelineColor.insert(0, green);
+                      timestamps.insert(0, '$minutesStr:$secondsStr');
                     });
                   },
                   onTapUp: (_) {
@@ -609,6 +684,10 @@ class _MyHomePageState extends State<MyHomePage>
                         image: AssetImage(imageEspecial2),
                       ),
                       //color: Colors.white
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/assistenciaIcon3.png'),
                     ),
                   ),
                 ),
