@@ -146,6 +146,103 @@ class _MyHomePageState extends State<MyHomePage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // #region Cards
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/yellowCard_Normal.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Cartão Vermelho"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/redCard_Normal.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Cartão Amarelo"),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  height: 10,
+                  thickness: 2,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                // #endregion
+
+                // #region Extra buttons
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/assistenciaIcon3.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Assistência"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/golIcon1.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Gol"),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  height: 10,
+                  thickness: 2,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                // #endregion
+
+                // #region Others
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/Button_Green.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Referente ao seu time"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/Button_Red.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Referente ao time inimigo"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/4-dribleIcon2.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                    new Text("Drible"),
+                  ],
+                ),
                 Row(
                   children: [
                     Image.asset(
@@ -179,46 +276,6 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/golIcon1.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                    new Text("Gol"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/assistenciaIcon3.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                    new Text("Assistência"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/yellowCard_Normal.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                    new Text("Cartão Vermelho"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/redCard_Normal.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                    new Text("Cartão Amarelo"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Image.asset(
                       'assets/undoButton.png',
                       height: 25,
                       width: 25,
@@ -236,6 +293,8 @@ class _MyHomePageState extends State<MyHomePage>
                     new Text("Reseta cronômetro"),
                   ],
                 ),
+
+                // #endregion
               ],
             ),
           ),
@@ -259,7 +318,7 @@ class _MyHomePageState extends State<MyHomePage>
     final double Height = MediaQuery.of(context).size.height;
 
     //Dev
-    print('Width $Width | Height $Height');
+    //print('Width $Width | Height $Height');
     //bool hideContainers = true;
 
     return Scaffold(
@@ -287,12 +346,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize, 360, Height),
                 width: scaleCoordinates(buttonSize, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageRedA = 'assets/Button_Red.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageRedA = 'assets/pressedButton_Red.png';
-                      timeline.insert(0, 'Chute ao Gol');
-                      timelineColor.insert(0, red);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Chute ao Gol');
+                        timelineColor.insert(0, red);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -302,11 +368,11 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(imageRedA),
-                        ),
-                        color: Colors.white),
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage(imageRedA),
+                      ),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Image.asset('assets/1-finalizaçãoIcon1.png'),
@@ -321,12 +387,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize, 360, Height),
                 width: scaleCoordinates(buttonSize, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageRedB = 'assets/Button_Red.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageRedB = 'assets/pressedButton_Red.png';
-                      timeline.insert(0, 'Desarme');
-                      timelineColor.insert(0, red);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Desarme');
+                        timelineColor.insert(0, red);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -336,7 +409,6 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.purple,
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: AssetImage(imageRedB),
@@ -357,12 +429,19 @@ class _MyHomePageState extends State<MyHomePage>
                 width: scaleCoordinates(buttonSize, 592, Width),
                 height: scaleCoordinates(buttonSize, 360, Height),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageRedC = 'assets/Button_Red.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageRedC = 'assets/pressedButton_Red.png';
-                      timeline.insert(0, 'Drible');
-                      timelineColor.insert(0, red);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Drible');
+                        timelineColor.insert(0, red);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -392,12 +471,19 @@ class _MyHomePageState extends State<MyHomePage>
                 width: scaleCoordinates(buttonSize, 592, Width),
                 height: scaleCoordinates(buttonSize, 360, Height),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageRedD = 'assets/Button_Red.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageRedD = 'assets/pressedButton_Red.png';
-                      timeline.insert(0, 'Passe');
-                      timelineColor.insert(0, red);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Passe');
+                        timelineColor.insert(0, red);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -427,12 +513,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize, 360, Height),
                 width: scaleCoordinates(buttonSize, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageGreenA = 'assets/Button_Green.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageGreenA = 'assets/pressedButton_Green.png';
-                      timeline.insert(0, 'Chute ao Gol');
-                      timelineColor.insert(0, green);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Chute ao Gol');
+                        timelineColor.insert(0, green);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -462,12 +555,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize, 360, Height),
                 width: scaleCoordinates(buttonSize, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageGreenB = 'assets/Button_Green.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageGreenB = 'assets/pressedButton_Green.png';
-                      timeline.insert(0, 'Disarme');
-                      timelineColor.insert(0, green);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Disarme');
+                        timelineColor.insert(0, green);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -497,12 +597,19 @@ class _MyHomePageState extends State<MyHomePage>
                 width: scaleCoordinates(buttonSize, 592, Width),
                 height: scaleCoordinates(buttonSize, 360, Height),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageGreenC = 'assets/Button_Green.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageGreenC = 'assets/pressedButton_Green.png';
-                      timeline.insert(0, 'Drible');
-                      timelineColor.insert(0, green);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Drible');
+                        timelineColor.insert(0, green);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -532,12 +639,19 @@ class _MyHomePageState extends State<MyHomePage>
                 width: scaleCoordinates(buttonSize, 592, Width),
                 height: scaleCoordinates(buttonSize, 360, Height),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageGreenD = 'assets/Button_Green.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageGreenD = 'assets/pressedButton_Green.png';
-                      timeline.insert(0, 'Passe');
-                      timelineColor.insert(0, green);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Passe');
+                        timelineColor.insert(0, green);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -567,12 +681,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize - 10, 360, Height),
                 width: scaleCoordinates(buttonSize - 10, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageRedCard = 'assets/redCard_Normal.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageRedCard = 'assets/redCard_Pressed.png';
-                      timeline.insert(0, 'Cartão Vermelho');
-                      timelineColor.insert(0, red);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Cartão Vermelho');
+                        timelineColor.insert(0, red);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -598,12 +719,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize - 10, 360, Height),
                 width: scaleCoordinates(buttonSize - 10, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageYellowCard = 'assets/yellowCard_Normal.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageYellowCard = 'assets/yellowCard_Pressed.png';
-                      timeline.insert(0, 'Cartão Amarelo');
-                      timelineColor.insert(0, yellow);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Cartão Amarelo');
+                        timelineColor.insert(0, yellow);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -629,12 +757,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize - 17, 360, Height),
                 width: scaleCoordinates(buttonSize - 17, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageEspecial1 = 'assets/Button_Special.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
                       imageEspecial1 = 'assets/pressedButton_Special.png';
-                      timeline.insert(0, 'Gol');
-                      timelineColor.insert(0, green);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Gol');
+                        timelineColor.insert(0, green);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -664,12 +799,19 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize - 17, 360, Height),
                 width: scaleCoordinates(buttonSize - 17, 592, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageEspecial2 = 'assets/Button_Special.png';
+                    });
+                  },
                   onTapDown: (_) {
                     setState(() {
-                      imageEspecial1 = 'assets/pressedButton_Special.png';
-                      timeline.insert(0, 'Assistência');
-                      timelineColor.insert(0, green);
-                      timestamps.insert(0, '$minutesStr:$secondsStr');
+                      imageEspecial2 = 'assets/pressedButton_Special.png';
+                      if (minutesStr != '00' || secondsStr != "00") {
+                        timeline.insert(0, 'Assistência');
+                        timelineColor.insert(0, green);
+                        timestamps.insert(0, '$minutesStr:$secondsStr');
+                      }
                     });
                   },
                   onTapUp: (_) {
@@ -699,6 +841,11 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize, 360, Height),
                 width: scaleCoordinates(buttonSize, 512, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageUndo = 'assets/undoButton.png';
+                    });
+                  },
                   onTapDown: (_) {
                     if (timeline.length > 0) {
                       setState(() {
@@ -764,6 +911,11 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize - 20, 360, Height),
                 width: scaleCoordinates(buttonSize - 20, 512, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageStopWatch = 'assets/quitButton.png';
+                    });
+                  },
                   onTapDown: (_) {
                     timerSubscription.cancel();
                     timerStream = null;
@@ -798,6 +950,11 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize - 20, 360, Height),
                 width: scaleCoordinates(buttonSize - 20, 512, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageStopWatch = 'assets/quitButton.png';
+                    });
+                  },
                   onTapDown: (_) {
                     if (!isCounting) {
                       setState(() {
@@ -906,6 +1063,11 @@ class _MyHomePageState extends State<MyHomePage>
                 height: scaleCoordinates(buttonSize - 20, 360, Height),
                 width: scaleCoordinates(buttonSize - 20, 512, Width),
                 child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      imageBlack = 'assets/Button_Black.png';
+                    });
+                  },
                   onTapDown: (_) {
                     _showDialog(context);
                     setState(() {
