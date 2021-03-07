@@ -852,6 +852,7 @@ class _MyHomePageState extends State<MyHomePage>
                         imageUndo = 'assets/undoButton_Pressed.png';
                         timeline.removeAt(0);
                         timelineColor.removeAt(0);
+                        timestamps.removeAt(0);
                       });
                     }
                   },
