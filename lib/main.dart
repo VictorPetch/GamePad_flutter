@@ -5,27 +5,29 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
+import 'package:ies_calculator/cadastro_screen.dart';
+import 'package:ies_calculator/resultModel.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-String imageRedA = 'assets/Button_Red.png';
-String imageRedB = 'assets/Button_Red.png';
-String imageRedC = 'assets/Button_Red.png';
-String imageRedD = 'assets/Button_Red.png';
-String imageGreenA = 'assets/Button_Green.png';
-String imageGreenB = 'assets/Button_Green.png';
-String imageGreenC = 'assets/Button_Green.png';
-String imageGreenD = 'assets/Button_Green.png';
-String imageRedCard = 'assets/redCard_Normal.png';
-String imageYellowCard = 'assets/yellowCard_Normal.png';
-String imageEspecial1 = 'assets/Button_Special.png';
-String imageEspecial2 = 'assets/Button_Special.png';
-String imageUndo = 'assets/undoButton.png';
-String imageQuit = 'assets/quitButton.png';
-String imageStopWatch = 'assets/quitButton.png';
-String imageBlack = 'assets/Button_Black.png';
+String imageRedA = 'assets/calculadora/Button_Red.png';
+String imageRedB = 'assets/calculadora/Button_Red.png';
+String imageRedC = 'assets/calculadora/Button_Red.png';
+String imageRedD = 'assets/calculadora/Button_Red.png';
+String imageGreenA = 'assets/calculadora/Button_Green.png';
+String imageGreenB = 'assets/calculadora/Button_Green.png';
+String imageGreenC = 'assets/calculadora/Button_Green.png';
+String imageGreenD = 'assets/calculadora/Button_Green.png';
+String imageRedCard = 'assets/calculadora/redCard_Normal.png';
+String imageYellowCard = 'assets/calculadora/yellowCard_Normal.png';
+String imageEspecial1 = 'assets/calculadora/Button_Special.png';
+String imageEspecial2 = 'assets/calculadora/Button_Special.png';
+String imageUndo = 'assets/calculadora/undoButton.png';
+String imageQuit = 'assets/calculadora/quitButton.png';
+String imageStopWatch = 'assets/calculadora/quitButton.png';
+String imageBlack = 'assets/calculadora/Button_Black.png';
 
 List<String> timeline = [];
 List<Color> timelineColor = [];
@@ -65,6 +67,8 @@ class MyHomePage extends StatefulWidget {
   não tem problema, contanto que essa ordem seja mantida. Então os campos
   top e height devem receber 360 como original Height. 
 */
+
+ResultsModel result;
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
@@ -113,6 +117,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   void initState() {
+    result = new ResultsModel();
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
@@ -150,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/yellowCard_Normal.png',
+                      'assets/calculadora/yellowCard_Normal.png',
                       height: 25,
                       width: 25,
                     ),
@@ -160,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/redCard_Normal.png',
+                      'assets/calculadora/redCard_Normal.png',
                       height: 25,
                       width: 25,
                     ),
@@ -183,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/assistenciaIcon3.png',
+                      'assets/calculadora/assistenciaIcon3.png',
                       height: 25,
                       width: 25,
                     ),
@@ -193,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/golIcon1.png',
+                      'assets/calculadora/golIcon1.png',
                       height: 25,
                       width: 25,
                     ),
@@ -216,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/Button_Green.png',
+                      'assets/calculadora/Button_Green.png',
                       height: 25,
                       width: 25,
                     ),
@@ -226,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/Button_Red.png',
+                      'assets/calculadora/Button_Red.png',
                       height: 25,
                       width: 25,
                     ),
@@ -236,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/4-dribleIcon2.png',
+                      'assets/calculadora/4-dribleIcon2.png',
                       height: 25,
                       width: 25,
                     ),
@@ -246,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/1-finalizaçãoIcon1.png',
+                      'assets/calculadora/1-finalizaçãoIcon1.png',
                       height: 25,
                       width: 25,
                     ),
@@ -256,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/2-PasseIcon2.png',
+                      'assets/calculadora/2-PasseIcon2.png',
                       height: 25,
                       width: 25,
                     ),
@@ -266,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/3-desarmeIcon1.png',
+                      'assets/calculadora/3-desarmeIcon1.png',
                       height: 25,
                       width: 25,
                     ),
@@ -276,7 +281,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/undoButton.png',
+                      'assets/calculadora/undoButton.png',
                       height: 25,
                       width: 25,
                     ),
@@ -286,7 +291,7 @@ class _MyHomePageState extends State<MyHomePage>
                 Row(
                   children: [
                     Image.asset(
-                      'assets/undoButton.png',
+                      'assets/calculadora/undoButton.png',
                       height: 25,
                       width: 25,
                     ),
@@ -333,8 +338,8 @@ class _MyHomePageState extends State<MyHomePage>
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: AssetImage(
-                      //'assets/Mockup_Referencia_rotated.jpg',
-                      'assets/BG.png',
+                      //'assets/calculadora/Mockup_Referencia_rotated.jpg',
+                      'assets/calculadora/BG.png',
                     ),
                   ),
                 ),
@@ -348,12 +353,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageRedA = 'assets/Button_Red.png';
+                      imageRedA = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageRedA = 'assets/pressedButton_Red.png';
+                      imageRedA = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Chute ao Gol');
                         timelineColor.insert(0, red);
@@ -363,7 +368,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageRedA = 'assets/Button_Red.png';
+                      imageRedA = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   child: Container(
@@ -375,7 +380,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/1-finalizaçãoIcon1.png'),
+                      child: Image.asset('assets/calculadora/1-finalizaçãoIcon1.png'),
                     ),
                   ),
                 ),
@@ -389,12 +394,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageRedB = 'assets/Button_Red.png';
+                      imageRedB = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageRedB = 'assets/pressedButton_Red.png';
+                      imageRedB = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Desarme');
                         timelineColor.insert(0, red);
@@ -404,7 +409,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageRedB = 'assets/Button_Red.png';
+                      imageRedB = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   child: Container(
@@ -417,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/3-desarmeIcon1.png'),
+                      child: Image.asset('assets/calculadora/3-desarmeIcon1.png'),
                     ),
                   ),
                 ),
@@ -431,12 +436,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageRedC = 'assets/Button_Red.png';
+                      imageRedC = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageRedC = 'assets/pressedButton_Red.png';
+                      imageRedC = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Drible');
                         timelineColor.insert(0, red);
@@ -446,7 +451,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageRedC = 'assets/Button_Red.png';
+                      imageRedC = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   child: Container(
@@ -459,7 +464,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/4-dribleIcon2.png'),
+                      child: Image.asset('assets/calculadora/4-dribleIcon2.png'),
                     ),
                   ),
                 ),
@@ -473,12 +478,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageRedD = 'assets/Button_Red.png';
+                      imageRedD = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageRedD = 'assets/pressedButton_Red.png';
+                      imageRedD = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Passe');
                         timelineColor.insert(0, red);
@@ -488,7 +493,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageRedD = 'assets/Button_Red.png';
+                      imageRedD = 'assets/calculadora/Button_Red.png';
                     });
                   },
                   child: Container(
@@ -501,7 +506,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/2-PasseIcon2.png'),
+                      child: Image.asset('assets/calculadora/2-PasseIcon2.png'),
                     ),
                   ),
                 ),
@@ -515,12 +520,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageGreenA = 'assets/Button_Green.png';
+                      imageGreenA = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenA = 'assets/pressedButton_Green.png';
+                      imageGreenA = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Chute ao Gol');
                         timelineColor.insert(0, green);
@@ -530,7 +535,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageGreenA = 'assets/Button_Green.png';
+                      imageGreenA = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   child: Container(
@@ -543,7 +548,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/1-finalizaçãoIcon1.png'),
+                      child: Image.asset('assets/calculadora/1-finalizaçãoIcon1.png'),
                     ),
                   ),
                 ),
@@ -557,12 +562,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageGreenB = 'assets/Button_Green.png';
+                      imageGreenB = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenB = 'assets/pressedButton_Green.png';
+                      imageGreenB = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Disarme');
                         timelineColor.insert(0, green);
@@ -572,7 +577,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageGreenB = 'assets/Button_Green.png';
+                      imageGreenB = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   child: Container(
@@ -585,7 +590,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/3-desarmeIcon1.png'),
+                      child: Image.asset('assets/calculadora/3-desarmeIcon1.png'),
                     ),
                   ),
                 ),
@@ -599,12 +604,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageGreenC = 'assets/Button_Green.png';
+                      imageGreenC = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenC = 'assets/pressedButton_Green.png';
+                      imageGreenC = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Drible');
                         timelineColor.insert(0, green);
@@ -614,7 +619,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageGreenC = 'assets/Button_Green.png';
+                      imageGreenC = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   child: Container(
@@ -627,7 +632,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/4-dribleIcon2.png'),
+                      child: Image.asset('assets/calculadora/4-dribleIcon2.png'),
                     ),
                   ),
                 ),
@@ -641,12 +646,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageGreenD = 'assets/Button_Green.png';
+                      imageGreenD = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenD = 'assets/pressedButton_Green.png';
+                      imageGreenD = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Passe');
                         timelineColor.insert(0, green);
@@ -656,7 +661,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageGreenD = 'assets/Button_Green.png';
+                      imageGreenD = 'assets/calculadora/Button_Green.png';
                     });
                   },
                   child: Container(
@@ -669,7 +674,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/2-PasseIcon2.png'),
+                      child: Image.asset('assets/calculadora/2-PasseIcon2.png'),
                     ),
                   ),
                 ),
@@ -683,12 +688,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageRedCard = 'assets/redCard_Normal.png';
+                      imageRedCard = 'assets/calculadora/redCard_Normal.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageRedCard = 'assets/redCard_Pressed.png';
+                      imageRedCard = 'assets/calculadora/redCard_Pressed.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Cartão Vermelho');
                         timelineColor.insert(0, red);
@@ -698,7 +703,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageRedCard = 'assets/redCard_Normal.png';
+                      imageRedCard = 'assets/calculadora/redCard_Normal.png';
                     });
                   },
                   child: Container(
@@ -721,12 +726,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageYellowCard = 'assets/yellowCard_Normal.png';
+                      imageYellowCard = 'assets/calculadora/yellowCard_Normal.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageYellowCard = 'assets/yellowCard_Pressed.png';
+                      imageYellowCard = 'assets/calculadora/yellowCard_Pressed.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Cartão Amarelo');
                         timelineColor.insert(0, yellow);
@@ -736,7 +741,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageYellowCard = 'assets/yellowCard_Normal.png';
+                      imageYellowCard = 'assets/calculadora/yellowCard_Normal.png';
                     });
                   },
                   child: Container(
@@ -759,12 +764,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageEspecial1 = 'assets/Button_Special.png';
+                      imageEspecial1 = 'assets/calculadora/Button_Special.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageEspecial1 = 'assets/pressedButton_Special.png';
+                      imageEspecial1 = 'assets/calculadora/pressedButton_Special.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Gol');
                         timelineColor.insert(0, green);
@@ -774,7 +779,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageEspecial1 = 'assets/Button_Special.png';
+                      imageEspecial1 = 'assets/calculadora/Button_Special.png';
                     });
                   },
                   child: Container(
@@ -787,7 +792,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/golIcon1.png'),
+                      child: Image.asset('assets/calculadora/golIcon1.png'),
                     ),
                   ),
                 ),
@@ -801,12 +806,12 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageEspecial2 = 'assets/Button_Special.png';
+                      imageEspecial2 = 'assets/calculadora/Button_Special.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageEspecial2 = 'assets/pressedButton_Special.png';
+                      imageEspecial2 = 'assets/calculadora/pressedButton_Special.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Assistência');
                         timelineColor.insert(0, green);
@@ -816,7 +821,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageEspecial2 = 'assets/Button_Special.png';
+                      imageEspecial2 = 'assets/calculadora/Button_Special.png';
                     });
                   },
                   child: Container(
@@ -829,11 +834,12 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/assistenciaIcon3.png'),
+                      child: Image.asset('assets/calculadora/assistenciaIcon3.png'),
                     ),
                   ),
                 ),
               ),
+
               //Undo Button
               Positioned(
                 top: scaleCoordinates(80, 360, Height),
@@ -843,13 +849,13 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageUndo = 'assets/undoButton.png';
+                      imageUndo = 'assets/calculadora/undoButton.png';
                     });
                   },
                   onTapDown: (_) {
                     if (timeline.length > 0) {
                       setState(() {
-                        imageUndo = 'assets/undoButton_Pressed.png';
+                        imageUndo = 'assets/calculadora/undoButton_Pressed.png';
                         timeline.removeAt(0);
                         timelineColor.removeAt(0);
                         timestamps.removeAt(0);
@@ -858,7 +864,7 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageUndo = 'assets/undoButton.png';
+                      imageUndo = 'assets/calculadora/undoButton.png';
                     });
                   },
                   child: Container(
@@ -914,14 +920,14 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageStopWatch = 'assets/quitButton.png';
+                      imageStopWatch = 'assets/calculadora/quitButton.png';
                     });
                   },
                   onTapDown: (_) {
                     timerSubscription.cancel();
                     timerStream = null;
                     setState(() {
-                      imageQuit = 'assets/quitButton_Pressed.png';
+                      imageQuit = 'assets/calculadora/quitButton_Pressed.png';
                       minutesStr = '00';
                       secondsStr = '00';
                       savedTick = 0;
@@ -929,8 +935,18 @@ class _MyHomePageState extends State<MyHomePage>
                     });
                   },
                   onTapUp: (_) {
+                    if (timestamps.isNotEmpty) {
+                      var result = new ResultsModel(
+                          actionTimeline: timeline,
+                          colorTimeline: timelineColor,
+                          timestamp: timestamps);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              new CadastroScreen(result)));
+                    }
+
                     setState(() {
-                      imageQuit = 'assets/quitButton.png';
+                      imageQuit = 'assets/calculadora/quitButton.png';
                     });
                   },
                   child: Container(
@@ -953,7 +969,7 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageStopWatch = 'assets/quitButton.png';
+                      imageStopWatch = 'assets/calculadora/quitButton.png';
                     });
                   },
                   onTapDown: (_) {
@@ -983,12 +999,12 @@ class _MyHomePageState extends State<MyHomePage>
                       });
                     }
                     setState(() {
-                      imageStopWatch = 'assets/quitButton_Pressed.png';
+                      imageStopWatch = 'assets/calculadora/quitButton_Pressed.png';
                     });
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageStopWatch = 'assets/quitButton.png';
+                      imageStopWatch = 'assets/calculadora/quitButton.png';
                     });
                   },
                   child: Container(
@@ -1066,18 +1082,18 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageBlack = 'assets/Button_Black.png';
+                      imageBlack = 'assets/calculadora/Button_Black.png';
                     });
                   },
                   onTapDown: (_) {
                     _showDialog(context);
                     setState(() {
-                      imageBlack = 'assets/pressedButton_Black.png';
+                      imageBlack = 'assets/calculadora/pressedButton_Black.png';
                     });
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageBlack = 'assets/Button_Black.png';
+                      imageBlack = 'assets/calculadora/Button_Black.png';
                     });
                   },
                   child: Container(
@@ -1139,76 +1155,3 @@ class _MyHomePageState extends State<MyHomePage>
   }
 }
 
-//Left Wing
-// Positioned(
-//   left: scaleCoordinates(33, 360, Width),
-//   width: scaleCoordinates(233, 360, Width),
-//   top: scaleCoordinates(24, 592, Height),
-//   height: scaleCoordinates(163, 592, Height),
-//   child: Container(
-//     color: hideContainers ? null : Colors.red,
-//   ),
-// ),
-// //Middle
-
-// //Right Wing
-// Positioned(
-//   left: scaleCoordinates(33,360,Width),
-//   width: scaleCoordinates(233,360,Width),
-//   top: scaleCoordinates(225,512,Height),
-//   height:scaleCoordinates(118,512,Height),
-//   child: Container(
-//     color: hideContainers ? null : Colors.blue,
-//   ),
-// ),
-// //Time
-
-// //Top Left
-// Positioned(
-//   right: scaleCoordinates(38,360,Width),
-//   width: scaleCoordinates(40,360,Width),
-//   top: scaleCoordinates(86,512,Height),
-//   height:scaleCoordinates(40,512,Height),
-//   child: Container(
-//     color: hideContainers ? null : Colors.pink,
-//   ),
-// ),
-// //Top Right
-// Positioned(
-//   right: scaleCoordinates(38,360,Width),
-//   width: scaleCoordinates(40,360,Width),
-//   top: scaleCoordinates(234,512,Height),
-//   height:scaleCoordinates(40,512,Height),
-//   child: Container(
-//     color: hideContainers ? null : Colors.pink,
-//   ),
-// ),
-
-//   Positioned(
-//     left: calcWidthRatio(Width,267),
-//     width: calcWidthRatio(Width,55),
-//     top: calcWidthRatio(Width,252),
-//     height: calcWidthRatio(Width,88),
-//     child: Container(
-//       color: Colors.purple,
-//     ),
-//   ),
-//   Positioned(
-//     left: calcWidthRatio(Width,277),
-//     width: calcWidthRatio(Width,50),
-//     top: calcWidthRatio(Width,136),
-//     height: calcWidthRatio(Width,78),
-//     child: Container(
-//       color: Colors.pink,
-//     ),
-//   ),
-//   Positioned(
-//     left: calcWidthRatio(Width,277),
-//     width: calcWidthRatio(Width,50),
-//     top: calcWidthRatio(Width,376),
-//     height: calcWidthRatio(Width,78),
-//     child: Container(
-//       color: Colors.pink,
-//     ),
-//   )
-//}

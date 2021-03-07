@@ -50,6 +50,8 @@ flutter:
   assets:
     - assets/
     - assets/resultados/
+    - assets/cadastro/
+    - assets/calculadora/
     - assets/fonts/
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -73,10 +75,10 @@ flutter:
 
     - family: FontText
       fonts:
-        - asset: assets/Fonte_Textos.ttf
+        - asset: assets/calculadora/Fonte_Textos.ttf
     - family: FontRelogio
       fonts:
-        - asset: assets/Fonte_Relogio.ttf
+        - asset: assets/calculadora/Fonte_Relogio.ttf
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
