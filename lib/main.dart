@@ -226,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage>
                       height: 25,
                       width: 25,
                     ),
-                    new Text("Referente ao seu time"),
+                    new Text("Ações completadas com sucesso"),
                   ],
                 ),
                 Row(
@@ -236,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage>
                       height: 25,
                       width: 25,
                     ),
-                    new Text("Referente ao time inimigo"),
+                    new Text("Ações completadas sem sucesso"),
                   ],
                 ),
                 Row(
@@ -362,7 +362,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageRedA = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Chute ao Gol-errado');
+                        timeline.insert(0, 'Chute ao Gol');
                         timelineReview.insert(0, red);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -403,7 +403,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageRedB = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Desarme-errado');
+                        timeline.insert(0, 'Desarme');
                         timelineReview.insert(0, red);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -445,7 +445,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageRedC = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Drible-errado');
+                        timeline.insert(0, 'Drible');
                         timelineReview.insert(0, red);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -487,7 +487,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageRedD = 'assets/calculadora/pressedButton_Red.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Passe-errado');
+                        timeline.insert(0, 'Passe');
                         timelineReview.insert(0, red);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -529,7 +529,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageGreenA = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Chute ao Gol-certo');
+                        timeline.insert(0, 'Chute ao Gol');
                         timelineReview.insert(0, green);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -571,7 +571,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageGreenB = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Desarme-certo');
+                        timeline.insert(0, 'Desarme');
                         timelineReview.insert(0, green);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -613,7 +613,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageGreenC = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Drible-certo');
+                        timeline.insert(0, 'Drible');
                         timelineReview.insert(0, green);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -655,7 +655,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageGreenD = 'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Passe-certo');
+                        timeline.insert(0, 'Passe');
                         timelineReview.insert(0, green);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -697,7 +697,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageRedCard = 'assets/calculadora/redCard_Pressed.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Cartão Vermelho-certo');
+                        timeline.insert(0, 'Cartão Vermelho');
                         timelineReview.insert(0, red);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -735,7 +735,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageYellowCard = 'assets/calculadora/yellowCard_Pressed.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Cartão Amarelo-certo');
+                        timeline.insert(0, 'Cartão Amarelo');
                         timelineReview.insert(0, yellow);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -773,7 +773,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageEspecial1 = 'assets/calculadora/pressedButton_Special.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Gol-certo');
+                        timeline.insert(0, 'Gol');
                         timelineReview.insert(0, green);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
@@ -815,7 +815,7 @@ class _MyHomePageState extends State<MyHomePage>
                     setState(() {
                       imageEspecial2 = 'assets/calculadora/pressedButton_Special.png';
                       if (minutesStr != '00' || secondsStr != "00") {
-                        timeline.insert(0, 'Assistência-certo');
+                        timeline.insert(0, 'Assistência');
                         timelineReview.insert(0, green);
                         timestamps.insert(0, '$minutesStr:$secondsStr');
                       }
