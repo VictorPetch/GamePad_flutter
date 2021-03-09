@@ -1,28 +1,48 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:ies_calculator/resultModel.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 // import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:radar_chart/radar_chart.dart';
 
 //This main is to be used when you want to test different screen sizes
-void main() => runApp(
-      DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => MaterialApp(
-          home: ResultadoScreen(),
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-        ), // Wrap your app
-      ),
-    );
+// void main() => runApp(
+//       DevicePreview(
+//         enabled: !kReleaseMode,
+//         builder: (context) => MaterialApp(
+//           home: ResultadoScreen(),
+//           locale: DevicePreview.locale(context),
+//           builder: DevicePreview.appBuilder,
+//         ), // Wrap your app
+//       ),
+//     );
 
 // void main() => runApp(ResultadoScreen());
 
 int redCards = 0, yellowCards = 0;
-
+var red = Colors.red;
+double passeCerto,
+    passeErrado,
+    desarmeCerto,
+    desarmeErrado,
+    golCerto,
+    golErrado,
+    chuteCerto,
+    chuteErrado,
+    assisCerto,
+    assisErrado,
+    dribleCerto,
+    dribleErrado;
+double passePercentage;
+TextEditingController golSeuTime, golTimeInimigo;
+// ignore: must_be_immutable
 class ResultadoScreen extends StatefulWidget {
+  var results = new ResultsModel();
+  ResultadoScreen(this.results);
+
   @override
   _ResultadoScreenState createState() => _ResultadoScreenState();
 }
@@ -30,10 +50,33 @@ class ResultadoScreen extends StatefulWidget {
 class _ResultadoScreenState extends State<ResultadoScreen> {
   PreferredSizeWidget _vertex;
 
+  double getNumberOfActions(String action) {
+    var actions = widget.results.actionTimeline
+        .where((value) => value == action);
+    return  actions.isEmpty ? 0 : 
+       actions.length.toDouble();
+  }
+
   @override
   void initState() {
     //Get action values from last screen
-    // var arguments = ModalRoute.of(context).settings.arguments;
+    print(widget.results);
+    passeErrado = getNumberOfActions('Passe-errado');
+    desarmeErrado = getNumberOfActions('Desarme-errado');
+    dribleErrado = getNumberOfActions('Drible-errado');
+    // golErrado = getNumberOfActions('Gol-errado');
+    chuteErrado = getNumberOfActions('Chute ao Gol-errado');
+    assisErrado = 0;//getNumberOfActions('Assistência-errado');
+
+    passeCerto = getNumberOfActions('Passe-certo');
+    desarmeCerto = getNumberOfActions('Desarme-certo');
+    dribleCerto = getNumberOfActions('Drible-certo');
+    golCerto = getNumberOfActions('Gol-certo');
+    chuteCerto = getNumberOfActions('Chute ao Gol-certo');
+    assisCerto = getNumberOfActions('Assistência-certo');
+
+    golSeuTime = new TextEditingController(text: '0');
+    golTimeInimigo = new TextEditingController(text: '0');
     super.initState();
   }
 
@@ -96,28 +139,57 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: height * 0.11,
-                      width: width * 0.22,
-                      child: Center(
-                        child: AutoSizeText(
-                          '1',
-                          minFontSize: 30,
-                          style: TextStyle(
-                              fontFamily: 'BebasNeue',
-                              fontSize: 33,
-                              color: Color(0xfff4fe90)),
+                    //Meu time
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: height * 0.11,
+                          width: width * 0.22,
+                          child: Center(
+                            child: TextFormField(
+                              controller: golSeuTime,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              style: TextStyle(
+                                fontFamily: 'BebasNeue',
+                                fontSize: 33,
+                              ),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            // color: Colors.red,
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage(
+                                  'assets/resultados/cadastro_Placar.png'),
+                            ),
+                          ),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        // color: Colors.red,
-                        image: DecorationImage(
-                          fit: BoxFit.contain,
-                          image: AssetImage(
-                              'assets/resultados/cadastro_Placar.png'),
+                        Container(
+                          padding: EdgeInsets.only(left: width * 0.032),
+                          width: width * 0.1,
+                          height: height * 0.07,
+                          // color: Colors.blue,
+                          child: Center(
+                            child: TextFormField(
+                              controller: golTimeInimigo,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                  fontFamily: 'BebasNeue',
+                                  fontSize: 33,
+                                  color: Color(0xfff4fe90)),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
+
+                    // X
                     Container(
                       height: height * 0.03,
                       width: width * 0.15,
@@ -129,27 +201,53 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: height * 0.11,
-                      width: width * 0.22,
-                      child: Center(
-                        child: AutoSizeText(
-                          '0',
-                          minFontSize: 30,
-                          style: TextStyle(
-                              fontFamily: 'BebasNeue',
-                              fontSize: 33,
-                              color: Color(0xfff4fe90)),
+
+                    //Time inimigo
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: height * 0.11,
+                          width: width * 0.22,
+                          child: Center(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              style: TextStyle(
+                                fontFamily: 'BebasNeue',
+                                fontSize: 33,
+                              ),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            // color: Colors.red,
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage(
+                                  'assets/resultados/cadastro_Placar.png'),
+                            ),
+                          ),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        // color: Colors.red,
-                        image: DecorationImage(
-                          fit: BoxFit.contain,
-                          image: AssetImage(
-                              'assets/resultados/cadastro_Placar.png'),
+                        Container(
+                          padding: EdgeInsets.only(left: width * 0.032),
+                          width: width * 0.1,
+                          height: height * 0.07,
+                          // color: Colors.blue,
+                          child: Center(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                  fontFamily: 'BebasNeue',
+                                  fontSize: 33,
+                                  color: Color(0xfff4fe90)),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
@@ -205,8 +303,7 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                       color: Colors.red,
                       image: DecorationImage(
                         fit: BoxFit.fill,
-                        image:
-                            AssetImage('assets/resultados/cadastro_graphB.png'),
+                        image: AssetImage('assets/resultados/Graph.png'),
                       ),
                     ),
                     child: Stack(
@@ -220,13 +317,22 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                             backgroundColor: Colors.transparent,
                             radars: [
                               RadarTile(
-                                values: [0.5, 0.4, 0.67, 0.5, 0.2, 1],
+                                values: [
+                                  dribleErrado>0 ? dribleErrado / (dribleErrado + dribleCerto) : 0.0,
+                                   assisErrado >0 ? assisErrado / (assisErrado + assisCerto) : 0.0,
+                                  chuteErrado > 0 ? chuteErrado / (chuteErrado + chuteCerto)
+                                  : 0.0,
+                                   1 / (1 + 0),
+                                  desarmeErrado > 0 ? desarmeErrado / (desarmeCerto + desarmeErrado) : 0.0,
+                                  passeErrado > 0.0 ? passeErrado / (passeErrado + passeCerto)
+                                   : 0.0,
+                                ],
                                 borderColor: Color(0xfff6615b),
                                 backgroundColor: Colors.transparent,
                                 borderStroke: 2,
                               ),
                               RadarTile(
-                                values: [0.1, 1, 0.3, 0.2, 0.4, 0.8],
+                                values: [0.0, 0, 0, 1, 0, 0],
                                 borderColor: Color(0xff78ba68),
                                 backgroundColor: Colors.transparent,
                                 borderStroke: 2,
@@ -237,46 +343,11 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                                 : width * 0.2,
                           ),
                         ),
-                        Container(
-                            // color: Colors.blue,
-                            ),
-                        Positioned(
-                          child: Container(
-                            child: AutoSizeText(
-                              'Desarme',
-                              maxLines: 1,
-                              minFontSize: 10,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),),
-                            color: Colors.blue,
-                          ),
-                          top: 0 * (height / 568),
-                         left: 25 * (width /320),
-                        ),
-                        Positioned(
-                          child: Container(
-                            width: width*0.2,
-                            child: AutoSizeText(
-                              'Gol',
-                              maxLines: 1,
-                              minFontSize: 10,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),),
-                            color: Colors.blue,
-                          ),
-                          top: height*0.25*0.05,
-                         left: width*0.9 *0.1,
-                        ),
-                        
                       ],
                     ),
                   ),
                 ),
                 // #endregion
-
-                //Radar Chart features
 
                 // #region List
                 Expanded(
@@ -290,38 +361,38 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                             width: width,
                             height: height,
                             action: 'Gol',
-                            alliedPoints: 4,
-                            enemyPoints: 4),
+                            alliedPoints: golCerto.toInt(),
+                            enemyPoints: golCerto.toInt() + int.parse(golSeuTime.text)),
                         ListTile(
                             width: width,
                             height: height,
                             action: 'Assistência',
-                            alliedPoints: 1,
-                            enemyPoints: 3),
+                            alliedPoints: assisCerto.toInt(),
+                            enemyPoints: assisErrado.toInt()),
                         ListTile(
                             width: width,
                             height: height,
                             action: 'Passe',
-                            alliedPoints: 1,
-                            enemyPoints: 3),
+                            alliedPoints: passeCerto.toInt(),
+                            enemyPoints: passeErrado.toInt()),
                         ListTile(
                             width: width,
                             height: height,
                             action: 'Chute ao Gol',
-                            alliedPoints: 1,
-                            enemyPoints: 3),
+                            alliedPoints: chuteCerto.toInt(),
+                            enemyPoints: chuteErrado.toInt()),
                         ListTile(
                             width: width,
                             height: height,
                             action: 'Desarme',
-                            alliedPoints: 1,
-                            enemyPoints: 3),
+                            alliedPoints: desarmeCerto.toInt(),
+                            enemyPoints: desarmeErrado.toInt()),
                         ListTile(
                             width: width,
                             height: height,
                             action: 'Drible',
-                            alliedPoints: 1,
-                            enemyPoints: 3),
+                            alliedPoints: dribleCerto.toInt(),
+                            enemyPoints: dribleErrado.toInt()),
                         Row(
                           children: [
                             Container(
@@ -509,7 +580,7 @@ class ListTile extends StatelessWidget {
                         ],
                       ),
                       lineHeight: height * 0.02,
-                      percent: alliedPoints / (alliedPoints + enemyPoints),
+                      percent: alliedPoints > 0 ? alliedPoints / (alliedPoints + enemyPoints) : 0,
                       // progressColor: Color(0xff79ba68),
                       backgroundColor: Color(0x00f5615b),
                     ),

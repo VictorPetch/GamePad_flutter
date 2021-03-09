@@ -1,28 +1,38 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ies_calculator/resultModel.dart';
+import 'package:expandable/expandable.dart';
+import 'package:ies_calculator/resultado_screen.dart';
 
-//This main is to be used when you want to test different screen sizes
-// void main() => runApp(
-//       DevicePreview(
-//         enabled: !kReleaseMode,
-//         builder: (context) => MaterialApp(
-//           home: CadastroScreen(),
-//           locale: DevicePreview.locale(context),
-//           builder: DevicePreview.appBuilder,
-//         ), // Wrap your app
-//       ),
-//     );
+// This main is to be used when you want to test different screen sizes
+ResultsModel results = new ResultsModel();
+void main() => runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => MaterialApp(
+          home: CadastroScreen(results),
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+        ), // Wrap your app
+      ),
+    );
 
 // void main() => runApp(CadastroScreen());
 
-String nomeCampeonato;
-String posicao;
-String nomeTime;
-String timeAdversario;
-String local;
-String data;
+var nomeCampeonato = TextEditingController(text: '');
+var posicao = TextEditingController(text: '');
+var nomeTime = TextEditingController(text: '');
+var timeAdversario = TextEditingController(text: '');
+var local = TextEditingController(text: '');
+var data = TextEditingController(text: '');
+var red = Colors.red;
+String notification = '';
+int posicaoGroupValue;
+var expanded = ExpandableController();
+String dropDownText = '';
 
 // ignore: must_be_immutable
 class CadastroScreen extends StatefulWidget {
@@ -56,7 +66,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     var safeAreaBottom = MediaQuery.of(context).padding.bottom;
     var safeAreaTop = MediaQuery.of(context).padding.top;
 
-    print('dev $width $height $safeAreaBottom $safeAreaTop');
+    // print('dev $width $height $safeAreaBottom $safeAreaTop');
 
     return Scaffold(
       body: SafeArea(
@@ -98,42 +108,241 @@ class _CadastroScreenState extends State<CadastroScreen> {
                   ),
                   // #endregion
 
-                  // #region Buttons
                   Container(
-                    margin: EdgeInsets.only(top: 40, bottom: 35),
+                    margin: EdgeInsets.only(
+                        top: height * 0.04, bottom: height * 0.02),
                     width: width * 0.65,
-                    height: height * 0.56,
+                    height: height * 0.6,
+                    padding: EdgeInsets.only(top: height*0.02),
                     // color: Colors.red,
                     child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: [
-                          mainButton(width, height, 'green', posicao, 10,'Nome do campeonato'),
-                          mainButton(width, height, 'green', posicao, 10,'Posição jogada'),
-                          mainButton(width, height, 'gray', posicao, 10,'Nome do time'),
-                          mainButton(width, height, 'gray', posicao, 10,'Time adversário (opcional)'),
-                          mainButton(width, height, 'gray', posicao, 10,'Local do jogo (opcional)'),
-                          mainButton(width, height, 'green', posicao, 0,'Data do jogo'),
+                          // #region Nome do campeonato
+                          mainButton(
+                            width,
+                            height,
+                            'green',
+                            nomeCampeonato,
+                            height * 0.013,
+                            'Nome do campeonato',
+                          ),
+                          // #endregion
+
+                          ExpandableNotifier(
+                            controller: expanded,
+                            child: ExpandablePanel(
+                              // #region Collapsed
+                              collapsed: Container(
+                                margin: EdgeInsets.only(bottom: height * 0.013),
+                                width: width,
+                                height: height * 0.08,
+                                decoration: BoxDecoration(
+                                  // color: Colors.red,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage(
+                                        'assets/cadastro/cadastro_dropdown.png'),
+                                  ),
+                                ),
+                                padding: EdgeInsets.only(right: width * 0.01),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.only(left: width * 0.05),
+                                        alignment: Alignment.centerLeft,
+                                        height: height * 0.1,
+                                        // color: red,
+                                        child: AutoSizeText(
+                                          posicao.text.isEmpty
+                                              ? 'Posição'
+                                              : posicao.text,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                    ExpandableButton(
+                                      child: Container(
+                                        width: width * 0.13,
+                                        height: height * 0.08,
+                                        //  color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // #endregion
+
+                              // #region Expanded
+                              expanded: Container(
+                                  margin:
+                                      EdgeInsets.only(bottom: height * 0.013),
+                                  width: width,
+                                  height: height * 0.36,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.red,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          'assets/cadastro/Componente3.png'),
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.only(right: width * 0.01,bottom: height*0.01),
+                                  child: Container(
+                                    width: width * 0.55,
+                                    // color: red,
+                                    margin: EdgeInsets.only(top: height*0.09),
+                                    child: SingleChildScrollView(
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Goleiro",
+                                            englishText: 'Goalkeeper',
+                                            expanded: expanded,
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Zagueiro",
+                                            englishText: 'CentreBack',
+                                            expanded: expanded,
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Lateral",
+                                            englishText: 'WingBack',
+                                            expanded: expanded,
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Volante",
+                                            englishText: 'DefensiveMidfielder',
+                                            expanded: expanded,
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Meia Extremo(Ponta)",
+                                            englishText: 'SideMidfielder',
+                                            expanded: expanded,
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Meia Articulador",
+                                            englishText: 'CentreMidfielder',
+                                            expanded: expanded,
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Atacante",
+                                            englishText: 'Striker',
+                                            expanded: expanded,
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Universal",
+                                            englishText: 'Universal',
+                                            expanded: expanded,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )),
+                              // #endregion
+                            
+                            ),
+                          ),
+
+                          // #region Nome do time
+                          mainButton(width, height, 'gray', nomeTime,
+                              height * 0.013, 'Nome do time (opcional)'),
+                          // #endregion
+
+                          // #region Time adversário
+                          mainButton(width, height, 'gray', timeAdversario,
+                              height * 0.013, 'Time adversário (opcional)'),
+                          // #endregion
+
+                          // #region Local
+                          mainButton(width, height, 'gray', local,
+                              height * 0.013, 'Local do jogo (opcional)'),
+                          // #endregion,
+
+                          // #region Data
+                          mainButton(
+                              width, height, 'green', data, 0, 'Data do jogo'),
+                          // #endregion
                         ],
                       ),
                     ),
                   ),
-                  // #endregion
 
                   // #region Final button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        width: width * 0.5,
+                        height: height * 0.05,
+                        // color: red,
+                        margin: EdgeInsets.only(right: width * 0.1, bottom: 10),
+                        child: AutoSizeText(
+                          notification != '' ? notification : '',
+                          maxLines: 2,
+                          style: TextStyle(fontSize: 14, color: red),
+                        ),
+                      ),
                       InkWell(
                         onTap: () {
                           //TODO levar pra results page
-                          print('asd');
+                          setState(() {
+                            notification = '';
+                          });
+                          print('posicao ${posicao.text}');
+
+                          if (nomeCampeonato.text.isEmpty ||
+                              posicao.text.isEmpty ||
+                              data.text.isEmpty) {
+                            setState(() {
+                              notification =
+                                  "Por favor, preencha os campos verdes.";
+                            });
+                          } else {
+                            //Ir pra outra pagina
+                            widget.results.nomeCampeonato = nomeCampeonato.text;
+                            widget.results.posicao = posicao.text;
+                            widget.results.nomeTime = nomeTime.text;
+                            widget.results.timeAdversario = timeAdversario.text;
+                            widget.results.local = local.text;
+                            widget.results.data = data.text;
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              new ResultadoScreen(widget.results)));
+                          }
+                          print('Dentro do modelo tem os seguintes campos:');
+                          print(widget.results.nomeCampeonato);
+                          print(widget.results.posicao);
+                          print(widget.results.nomeTime);
+                          print(widget.results.timeAdversario);
+                          print(widget.results.local);
+                          print(widget.results.data);
                         },
                         child: Container(
-                          margin: EdgeInsets.only(right: 50, bottom: 20),
+                          margin: EdgeInsets.only(right: 50),
                           height: height * 0.07,
                           width: width * 0.2,
                           decoration: BoxDecoration(
-                            // color: Colors.green,
+                            color: Colors.green,
                             image: DecorationImage(
                               fit: BoxFit.contain,
                               image: AssetImage(
@@ -154,9 +363,38 @@ class _CadastroScreenState extends State<CadastroScreen> {
     );
   }
 
+  // #region posicaoTile
+  Container posicaoTile(
+      {double width, String text,String englishText,  ExpandableController expanded}) {
+    return Container(
+      width: width * 0.55,
+      margin: EdgeInsets.only(left: width*0.05,bottom: 10),
+      // color: red,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            expanded.toggle();
+            posicao.text = text;
+          });
+        },
+        child: AutoSizeText('$englishText: \"$text\"',
+        maxLines: 2,
+        minFontSize: 10,
+        style: TextStyle(fontSize: 18),),
+      ),
+    );
+  }
+  // #endregion
+
   // #region mainButton
-  Container mainButton(double width, double height, String color,
-      String controller, double bottomPadding,String hintText) {
+  Container mainButton(
+    double width,
+    double height,
+    String color,
+    TextEditingController controller,
+    double bottomPadding,
+    String hintText,
+  ) {
     return Container(
       margin: EdgeInsets.only(bottom: bottomPadding),
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -171,24 +409,20 @@ class _CadastroScreenState extends State<CadastroScreen> {
       ),
       child: Center(
         child: TextFormField(
+          controller: controller,
+          onChanged: (text) {
+            print(text);
+            setState(() {
+              print(controller.text);
+            });
+          },
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
           ),
-          validator: (text) {
-            if (text.isEmpty) {
-              return 'algum texto';
-            } else {
-              setState(() {
-                controller = text;
-              });
-              return null;
-            }
-          },
         ),
       ),
     );
   }
   // #endregion
 }
-
