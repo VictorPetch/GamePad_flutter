@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:ies_calculator/resultModel.dart';
 import 'package:expandable/expandable.dart';
 import 'package:ies_calculator/resultado_screen.dart';
+import 'package:intl/intl.dart';
 
 // This main is to be used when you want to test different screen sizes
 ResultsModel results = new ResultsModel();
@@ -44,6 +45,22 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
+  DateTime selectedDate = DateTime.now();
+  String date;
+  Future<String> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1980, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      selectedDate = picked;
+      return picked.toString().split(' ')[0];
+    } else if (picked == selectedDate) {
+      return selectedDate.toString().split(' ')[0];
+    }
+  }
+
   // #region initState
   @override
   void initState() {
@@ -73,7 +90,6 @@ class _CadastroScreenState extends State<CadastroScreen> {
         child: SingleChildScrollView(
           child: Stack(
             children: [
-
               // #region Background
               Container(
                 width: width,
@@ -110,10 +126,10 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
                   Container(
                     margin: EdgeInsets.only(
-                        top: height * 0.04, bottom: height * 0.02),
+                        top: height * 0.04, bottom: height * 0.03),
                     width: width * 0.65,
                     height: height * 0.6,
-                    padding: EdgeInsets.only(top: height*0.02),
+                    padding: EdgeInsets.only(top: height * 0.02),
                     // color: Colors.red,
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
@@ -192,11 +208,13 @@ class _CadastroScreenState extends State<CadastroScreen> {
                                           'assets/cadastro/Componente3.png'),
                                     ),
                                   ),
-                                  padding: EdgeInsets.only(right: width * 0.01,bottom: height*0.01),
+                                  padding: EdgeInsets.only(
+                                      right: width * 0.01,
+                                      bottom: height * 0.01),
                                   child: Container(
                                     width: width * 0.55,
                                     // color: red,
-                                    margin: EdgeInsets.only(top: height*0.09),
+                                    margin: EdgeInsets.only(top: height * 0.09),
                                     child: SingleChildScrollView(
                                       physics: AlwaysScrollableScrollPhysics(),
                                       child: Column(
@@ -258,7 +276,6 @@ class _CadastroScreenState extends State<CadastroScreen> {
                                     ),
                                   )),
                               // #endregion
-                            
                             ),
                           ),
 
@@ -278,8 +295,33 @@ class _CadastroScreenState extends State<CadastroScreen> {
                           // #endregion,
 
                           // #region Data
-                          mainButton(
-                              width, height, 'green', data, 0, 'Data do jogo'),
+
+                          Stack(
+                            children: [
+                              mainButton(width, height, 'green', data, 0,
+                                  date ?? 'Data do jogo'),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                  onTap: () async {
+                                    String thisDate =
+                                        await _selectDate(context);
+                                    setState(() {
+                                      date = thisDate;
+                                    });
+                                    print('selected date: $date');
+                                  },
+                                  child: Container(
+                                      margin:
+                                          EdgeInsets.only(top: 15, right: 25),
+                                      width: 30,
+                                      height: 30,
+                                      child: Icon(Icons.calendar_today)),
+                                ),
+                              ),
+                            ],
+                          ),
+
                           // #endregion
                         ],
                       ),
@@ -289,13 +331,13 @@ class _CadastroScreenState extends State<CadastroScreen> {
                   // #region Final button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         width: width * 0.5,
                         height: height * 0.05,
                         // color: red,
-                        margin: EdgeInsets.only(right: width * 0.1, bottom: 10),
+                        margin: EdgeInsets.only(right: width * 0.1, bottom: 0),
                         child: AutoSizeText(
                           notification != '' ? notification : '',
                           maxLines: 2,
@@ -312,7 +354,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
                           if (nomeCampeonato.text.isEmpty ||
                               posicao.text.isEmpty ||
-                              data.text.isEmpty) {
+                              date.isEmpty) {
                             setState(() {
                               notification =
                                   "Por favor, preencha os campos verdes.";
@@ -324,10 +366,11 @@ class _CadastroScreenState extends State<CadastroScreen> {
                             widget.results.nomeTime = nomeTime.text;
                             widget.results.timeAdversario = timeAdversario.text;
                             widget.results.local = local.text;
-                            widget.results.data = data.text;
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              new ResultadoScreen(widget.results)));
+                            widget.results.data = date;
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        new ResultadoScreen(widget.results)));
                           }
                           print('Dentro do modelo tem os seguintes campos:');
                           print(widget.results.nomeCampeonato);
@@ -342,7 +385,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                           height: height * 0.07,
                           width: width * 0.2,
                           decoration: BoxDecoration(
-                            color: Colors.green,
+                            // color: Colors.green,
                             image: DecorationImage(
                               fit: BoxFit.contain,
                               image: AssetImage(
@@ -365,10 +408,13 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   // #region posicaoTile
   Container posicaoTile(
-      {double width, String text,String englishText,  ExpandableController expanded}) {
+      {double width,
+      String text,
+      String englishText,
+      ExpandableController expanded}) {
     return Container(
       width: width * 0.55,
-      margin: EdgeInsets.only(left: width*0.05,bottom: 10),
+      margin: EdgeInsets.only(left: width * 0.05, bottom: 10),
       // color: red,
       child: GestureDetector(
         onTap: () {
@@ -377,10 +423,12 @@ class _CadastroScreenState extends State<CadastroScreen> {
             posicao.text = text;
           });
         },
-        child: AutoSizeText('$englishText: \"$text\"',
-        maxLines: 2,
-        minFontSize: 10,
-        style: TextStyle(fontSize: 18),),
+        child: AutoSizeText(
+          '$englishText: \"$text\"',
+          maxLines: 2,
+          minFontSize: 10,
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }

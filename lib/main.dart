@@ -944,8 +944,8 @@ class _MyHomePageState extends State<MyHomePage>
                           timestamp: timestamps);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              //new CadastroScreen(result)));
-                              new ResultadoScreen(result)));
+                              new CadastroScreen(result)));
+                              // new ResultadoScreen(result)));
                     }
 
                     setState(() {
