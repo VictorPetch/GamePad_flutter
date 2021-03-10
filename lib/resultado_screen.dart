@@ -4,7 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ies_calculator/main.dart';
+import 'package:ies_calculator/teste.dart';
 import 'package:ies_calculator/resultModel.dart';
 import 'package:ies_calculator/utils/utils.dart';
 import 'package:ies_calculator/utils/widget_to_image.dart';
@@ -536,7 +536,7 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              new MyHomePage()));
+                                              new PlayerCard()));
                                 },
                                 child: Container(
                                   margin: EdgeInsets.only(right: 20, bottom: 20),
