@@ -424,7 +424,8 @@ class _CadastroScreenState extends State<CadastroScreen> {
           });
         },
         child: AutoSizeText(
-          '$englishText: \"$text\"',
+          '$text',
+          // '$englishText: \"$text\"',
           maxLines: 2,
           minFontSize: 10,
           style: TextStyle(fontSize: 18),
