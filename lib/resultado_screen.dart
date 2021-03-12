@@ -4,7 +4,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ies_calculator/teste.dart';
+import 'package:ies_calculator/newPlayerCard.dart';
+// import 'package:ies_calculator/player_card.dart';
 import 'package:ies_calculator/resultModel.dart';
 import 'package:ies_calculator/utils/utils.dart';
 import 'package:ies_calculator/utils/widget_to_image.dart';
@@ -533,7 +534,7 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Navigator.of(context).pushReplacement(
+                                  Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               new PlayerCard()));

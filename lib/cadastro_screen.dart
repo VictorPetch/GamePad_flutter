@@ -299,7 +299,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                           Stack(
                             children: [
                               mainButton(width, height, 'green', data, 0,
-                                  date ?? 'Data do jogo'),
+                                  date ?? 'Data do jogo',enabled: false),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: InkWell(
@@ -443,6 +443,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     TextEditingController controller,
     double bottomPadding,
     String hintText,
+    {bool enabled = true}
   ) {
     return Container(
       margin: EdgeInsets.only(bottom: bottomPadding),
@@ -458,6 +459,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
       ),
       child: Center(
         child: TextFormField(
+          enabled: enabled,
           controller: controller,
           onChanged: (text) {
             print(text);
@@ -467,7 +469,9 @@ class _CadastroScreenState extends State<CadastroScreen> {
           },
           decoration: InputDecoration(
             border: InputBorder.none,
-            hintText: hintText,
+            // hintText: hintText,
+            labelText: hintText,
+            labelStyle: TextStyle(color: Colors.black)
           ),
         ),
       ),

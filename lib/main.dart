@@ -26,8 +26,8 @@ String imageYellowCard = 'assets/calculadora/yellowCard_Normal.png';
 String imageEspecial1 = 'assets/calculadora/Button_Special.png';
 String imageEspecial2 = 'assets/calculadora/Button_Special.png';
 String imageUndo = 'assets/calculadora/undoButton.png';
-String imageQuit = 'assets/calculadora/quitButton.png';
-String imageStopWatch = 'assets/calculadora/quitButton.png';
+String imageQuit = 'assets/calculadora/stopButton.png';
+String imageStopWatch = 'assets/calculadora/playButton.png';
 String imageBlack = 'assets/calculadora/Button_Black.png';
 
 List<String> timeline = [];
@@ -346,7 +346,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+
               //Red A
+              // #region
               Positioned(
                 top: scaleCoordinates(185, 360, Height),
                 left: scaleCoordinates(50, 592, Width),
@@ -382,12 +384,15 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/calculadora/1-finalizaçãoIcon1.png'),
+                      child: Image.asset(
+                          'assets/calculadora/1-finalizaçãoIcon1.png'),
                     ),
                   ),
                 ),
               ),
+              // #endregion
               //Red B
+              // #region
               Positioned(
                 top: scaleCoordinates(185, 360, Height),
                 left: scaleCoordinates(145, 592, Width),
@@ -424,12 +429,15 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/calculadora/3-desarmeIcon1.png'),
+                      child:
+                          Image.asset('assets/calculadora/3-desarmeIcon1.png'),
                     ),
                   ),
                 ),
               ),
+              // #endregion
               //Red C
+              // #region
               Positioned(
                 top: scaleCoordinates(125, 360, Height),
                 left: scaleCoordinates(97.5, 592, Width),
@@ -466,12 +474,15 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/calculadora/4-dribleIcon2.png'),
+                      child:
+                          Image.asset('assets/calculadora/4-dribleIcon2.png'),
                     ),
                   ),
                 ),
               ),
+              // #endregion
               //Red D
+              // #region
               Positioned(
                 top: scaleCoordinates(240, 360, Height),
                 left: scaleCoordinates(97.5, 592, Width),
@@ -513,7 +524,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Green A
+              // #region
               Positioned(
                 top: scaleCoordinates(185, 360, Height),
                 left: scaleCoordinates(50 + 345, 592, Width),
@@ -527,7 +540,8 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenA = 'assets/calculadora/pressedButton_Green.png';
+                      imageGreenA =
+                          'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Chute ao Gol');
                         timelineReview.insert(0, green);
@@ -550,12 +564,15 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/calculadora/1-finalizaçãoIcon1.png'),
+                      child: Image.asset(
+                          'assets/calculadora/1-finalizaçãoIcon1.png'),
                     ),
                   ),
                 ),
               ),
+              // #endregion
               //Green B
+              // #region
               Positioned(
                 top: scaleCoordinates(185, 360, Height),
                 left: scaleCoordinates(145 + 345, 592, Width),
@@ -569,7 +586,8 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenB = 'assets/calculadora/pressedButton_Green.png';
+                      imageGreenB =
+                          'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Desarme');
                         timelineReview.insert(0, green);
@@ -592,12 +610,15 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/calculadora/3-desarmeIcon1.png'),
+                      child:
+                          Image.asset('assets/calculadora/3-desarmeIcon1.png'),
                     ),
                   ),
                 ),
               ),
+              // #endregion
               //Green C
+              // #region
               Positioned(
                 top: scaleCoordinates(125, 360, Height),
                 left: scaleCoordinates(97.5 + 345, 592, Width),
@@ -611,7 +632,8 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenC = 'assets/calculadora/pressedButton_Green.png';
+                      imageGreenC =
+                          'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Drible');
                         timelineReview.insert(0, green);
@@ -634,12 +656,15 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/calculadora/4-dribleIcon2.png'),
+                      child:
+                          Image.asset('assets/calculadora/4-dribleIcon2.png'),
                     ),
                   ),
                 ),
               ),
+              // #endregion
               //Green D
+              // #region
               Positioned(
                 top: scaleCoordinates(240, 360, Height),
                 left: scaleCoordinates(97.5 + 345, 592, Width),
@@ -653,7 +678,8 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageGreenD = 'assets/calculadora/pressedButton_Green.png';
+                      imageGreenD =
+                          'assets/calculadora/pressedButton_Green.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Passe');
                         timelineReview.insert(0, green);
@@ -681,7 +707,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Left Red Card
+              // #region
               Positioned(
                 top: scaleCoordinates(39, 360, Height),
                 left: scaleCoordinates(135, 592, Width),
@@ -719,7 +747,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Left Yellow Card
+              // #region
               Positioned(
                 top: scaleCoordinates(39, 360, Height),
                 left: scaleCoordinates(170, 592, Width),
@@ -728,12 +758,14 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageYellowCard = 'assets/calculadora/yellowCard_Normal.png';
+                      imageYellowCard =
+                          'assets/calculadora/yellowCard_Normal.png';
                     });
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageYellowCard = 'assets/calculadora/yellowCard_Pressed.png';
+                      imageYellowCard =
+                          'assets/calculadora/yellowCard_Pressed.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Cartão Amarelo');
                         timelineReview.insert(0, yellow);
@@ -743,7 +775,8 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapUp: (_) {
                     setState(() {
-                      imageYellowCard = 'assets/calculadora/yellowCard_Normal.png';
+                      imageYellowCard =
+                          'assets/calculadora/yellowCard_Normal.png';
                     });
                   },
                   child: Container(
@@ -757,7 +790,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Especial Button 1
+              // #region
               Positioned(
                 top: scaleCoordinates(41, 360, Height),
                 left: scaleCoordinates(385, 592, Width),
@@ -771,7 +806,8 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageEspecial1 = 'assets/calculadora/pressedButton_Special.png';
+                      imageEspecial1 =
+                          'assets/calculadora/pressedButton_Special.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Gol');
                         timelineReview.insert(0, green);
@@ -799,7 +835,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Especial Button 2
+              // #region
               Positioned(
                 top: scaleCoordinates(41, 360, Height),
                 left: scaleCoordinates(420, 592, Width),
@@ -813,7 +851,8 @@ class _MyHomePageState extends State<MyHomePage>
                   },
                   onTapDown: (_) {
                     setState(() {
-                      imageEspecial2 = 'assets/calculadora/pressedButton_Special.png';
+                      imageEspecial2 =
+                          'assets/calculadora/pressedButton_Special.png';
                       if (minutesStr != '00' || secondsStr != "00") {
                         timeline.insert(0, 'Assistência');
                         timelineReview.insert(0, green);
@@ -836,13 +875,15 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.asset('assets/calculadora/assistenciaIcon3.png'),
+                      child: Image.asset(
+                          'assets/calculadora/assistenciaIcon3.png'),
                     ),
                   ),
                 ),
               ),
-
+              // #endregion
               //Undo Button
+              // #region
               Positioned(
                 top: scaleCoordinates(80, 360, Height),
                 left: scaleCoordinates(230, 512, Width),
@@ -892,7 +933,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Time
+              // #region
               Positioned(
                 top: scaleCoordinates(41, 360, Height),
                 left: scaleCoordinates(221, 512, Width),
@@ -913,7 +956,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Quit Button
+              // #region
               Positioned(
                 top: scaleCoordinates(41, 360, Height),
                 left: scaleCoordinates(461, 512, Width),
@@ -922,21 +967,29 @@ class _MyHomePageState extends State<MyHomePage>
                 child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
-                      imageStopWatch = 'assets/calculadora/quitButton.png';
+                      imageQuit = 'assets/calculadora/stopButton.png';
                     });
                   },
                   onTapDown: (_) {
-                    timerSubscription.cancel();
-                    timerStream = null;
                     setState(() {
-                      imageQuit = 'assets/calculadora/quitButton_Pressed.png';
+                      imageQuit =
+                          'assets/calculadora/stop_play_pause_buttonPressed.png';
+                    });
+                  },
+                  onTapUp: (_) {
+                    if (timerSubscription != null) {
+                      timerSubscription.cancel();
+                      timerStream = null;
+                      imageStopWatch = 'assets/calculadora/playButton.png';
+                    }
+
+                    setState(() {
+                      imageQuit = 'assets/calculadora/stopButton.png';
                       minutesStr = '00';
                       secondsStr = '00';
                       savedTick = 0;
                       isCounting = false;
                     });
-                  },
-                  onTapUp: (_) {
                     if (timestamps.isNotEmpty) {
                       var result = new ResultsModel(
                           actionTimeline: timeline,
@@ -945,12 +998,8 @@ class _MyHomePageState extends State<MyHomePage>
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) =>
                               new CadastroScreen(result)));
-                              // new ResultadoScreen(result)));
+                      // new ResultadoScreen(result)));
                     }
-
-                    setState(() {
-                      imageQuit = 'assets/calculadora/quitButton.png';
-                    });
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -963,7 +1012,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Start StopWatch
+              // #region
               Positioned(
                 top: scaleCoordinates(41, 360, Height),
                 left: scaleCoordinates(421, 512, Width),
@@ -971,14 +1022,27 @@ class _MyHomePageState extends State<MyHomePage>
                 width: scaleCoordinates(buttonSize - 20, 512, Width),
                 child: GestureDetector(
                   onTapCancel: () {
-                    setState(() {
-                      imageStopWatch = 'assets/calculadora/quitButton.png';
-                    });
+                    if (isCounting) {
+                      setState(() {
+                        imageStopWatch = 'assets/calculadora/pauseButton.png';
+                      });
+                    } else {
+                      setState(() {
+                        imageStopWatch = 'assets/calculadora/playButton.png';
+                      });
+                    }
                   },
                   onTapDown: (_) {
+                    setState(() {
+                      imageStopWatch =
+                          'assets/calculadora/stop_play_pause_buttonPressed.png';
+                    });
+                  },
+                  onTapUp: (_) {
                     if (!isCounting) {
                       setState(() {
                         isCounting = true;
+                        imageStopWatch = 'assets/calculadora/pauseButton.png';
                       });
                       timerStream = stopWatchStream();
                       timerSubscription = timerStream.listen((int newTick) {
@@ -999,16 +1063,9 @@ class _MyHomePageState extends State<MyHomePage>
                         savedTick += tick;
                         isCounting = false;
                         timerSubscription.cancel();
+                        imageStopWatch = 'assets/calculadora/playButton.png';
                       });
                     }
-                    setState(() {
-                      imageStopWatch = 'assets/calculadora/quitButton_Pressed.png';
-                    });
-                  },
-                  onTapUp: (_) {
-                    setState(() {
-                      imageStopWatch = 'assets/calculadora/quitButton.png';
-                    });
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -1021,7 +1078,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Timeline
+              // #region
               Positioned(
                 top: scaleCoordinates(120, 360, Height),
                 left: scaleCoordinates(210, 512, Width),
@@ -1076,7 +1135,9 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
               //Help
+              // #region
               Positioned(
                 top: scaleCoordinates(41, 360, Height),
                 left: scaleCoordinates(15, 512, Width),
@@ -1117,6 +1178,7 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ),
               ),
+              // #endregion
             ],
           ),
         ],
@@ -1157,4 +1219,3 @@ class _MyHomePageState extends State<MyHomePage>
     );
   }
 }
-
