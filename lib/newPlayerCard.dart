@@ -1,21 +1,9 @@
 import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ies_calculator/main.dart';
+import 'package:ies_calculator/resultModel.dart';
 import 'package:ies_calculator/utils/utils.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:ies_calculator/utils/widget_to_image.dart';
-
-void main() => runApp(
-      DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => MaterialApp(
-          home: MaterialApp(home: PlayerCard()),
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-        ), // Wrap your app
-      ),
-    );
 
 // void main() => runApp(MaterialApp(home: PlayerCard(),));
 
@@ -51,6 +39,8 @@ const statsLabelStyle = TextStyle(
 );
 
 class PlayerCard extends StatefulWidget {
+  var results = ResultsModel();
+  PlayerCard(this.results);
   //TODO usar isso depois
   // final String typeCard;
   // PlayerCard(this.typeCard);
@@ -63,12 +53,57 @@ class _PlayerCardScreenState extends State<PlayerCard> {
   GlobalKey key;
   Uint8List bytes;
   bool _isShared = false;
+  List<int> actionsTotal;
+  List<int> actionsCorretas;
+
+  @override
+  void initState() {
+    actionsTotal = [0, 0, 0, 0, 0, 0];
+    actionsCorretas = [0, 0, 0, 0, 0, 0];
+    for (var i = 0; i < widget.results.actionTimeline.length; i++) {
+      setState(() {
+        if (widget.results.actionTimeline[i] == 'Passe') {
+          actionsTotal[0] += 1;
+          if (widget.results.colorTimeline[i] == Color(0xff47ff84)) {
+            actionsCorretas[0] += 1;
+          }
+        } else if (widget.results.actionTimeline[i] == 'Chute ao Gol') {
+          actionsTotal[1] += 1;
+          if (widget.results.colorTimeline[i] == Color(0xff47ff84)) {
+            actionsCorretas[1] += 1;
+          }
+        } else if (widget.results.actionTimeline[i] == 'Desarme') {
+          actionsTotal[2] += 1;
+          if (widget.results.colorTimeline[i] == Color(0xff47ff84)) {
+            actionsCorretas[2] += 1;
+          }
+        } else if (widget.results.actionTimeline[i] == 'Assistência') {
+          actionsTotal[3] += 1;
+          if (widget.results.colorTimeline[i] == Color(0xff47ff84)) {
+            actionsCorretas[3] += 1;
+          }
+        } else if (widget.results.actionTimeline[i] == 'Gol') {
+          actionsTotal[4] += 1;
+          if (widget.results.colorTimeline[i] == Color(0xff47ff84)) {
+            actionsCorretas[4] += 1;
+          }
+        } else if (widget.results.actionTimeline[i] == 'Drible') {
+          actionsTotal[5] += 1;
+          if (widget.results.colorTimeline[i] == Color(0xff47ff84)) {
+            actionsCorretas[5] += 1;
+          }
+        }
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     String _pathImage = "assets/card_calculadora/gold.png";
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    var height =
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     print(height);
     // if(this.typeCard == "G") _pathImage = "assets/gold_rare.png";
     // if(this.typeCard == "S") _pathImage = "assets/silver_rare.png";
@@ -106,23 +141,23 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                     ),
 
                     // #region Right
-                    _isShared ? 
-                    Container():
-                    Positioned(
-                      right: width*0.50,
-                      top: height*0.19,
-                      child: Container(
-                      width: width*0.10,
-                      height: height*0.08,
-                      // color: Colors.red,
-                      child: IconButton(
-                        icon: Icon(Icons.share),
-                        onPressed: (){
-                          shareImage(bytes,key);
-                        },
-                      ),
-                      ),
-                    ),
+                    _isShared
+                        ? Container()
+                        : Positioned(
+                            right: width * 0.50,
+                            top: height * 0.19,
+                            child: Container(
+                              width: width * 0.10,
+                              height: height * 0.08,
+                              // color: Colors.red,
+                              child: IconButton(
+                                icon: Icon(Icons.share),
+                                onPressed: () {
+                                  shareImage(bytes, key);
+                                },
+                              ),
+                            ),
+                          ),
                     Positioned(
                       right: width * 0.17,
                       top: height * 0.18,
@@ -195,10 +230,25 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: List.generate(3,(index){
-                                  return  Text(
-                                    "10",
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: List.generate(3, (index) {
+                                  var notas = [
+                                    this.actionsCorretas[0] > 0
+                                        ? this.actionsCorretas[0] /
+                                            this.actionsTotal[0]
+                                        : 0,
+                                    this.actionsCorretas[1] > 0
+                                        ? this.actionsCorretas[1] /
+                                            this.actionsTotal[1]
+                                        : 0,
+                                    this.actionsCorretas[2] > 0
+                                        ? this.actionsCorretas[2] /
+                                            this.actionsTotal[2]
+                                        : 0,
+                                  ];
+                                  return Text(
+                                    (notas[index] * 10).toInt().toString(),
                                     maxLines: 1,
                                     style: TextStyle(
                                         fontSize: 24,
@@ -209,30 +259,46 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: width*0.02),
+                              margin: EdgeInsets.only(left: width * 0.02),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: List.generate(3,(index){
-                                  return  Text(
-                                    "AAA",
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w300,
-                                        fontFamily: 'Oswald'),
-                                  );
-                                })
-                              ),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: List.generate(3, (index) {
+                                    var actions = ['PSS', 'CHT', 'DES'];
+                                    return Text(
+                                      actions[index],
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Oswald'),
+                                    );
+                                  })),
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: width*0.02),
+                              margin: EdgeInsets.only(left: width * 0.02),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: List.generate(3,(index){
-                                  return  Text(
-                                    "10",
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: List.generate(3, (index) {
+                                  var notas = [
+                                    this.actionsCorretas[3] > 0
+                                        ? this.actionsCorretas[3] /
+                                            this.actionsTotal[3]
+                                        : 0,
+                                    this.actionsCorretas[4] > 0
+                                        ? this.actionsCorretas[4] /
+                                            this.actionsTotal[4]
+                                        : 0,
+                                    this.actionsCorretas[5] > 0
+                                        ? this.actionsCorretas[5] /
+                                            this.actionsTotal[5]
+                                        : 0,
+                                  ];
+                                  return Text(
+                                    (notas[index] * 10).toInt().toString(),
                                     maxLines: 1,
                                     style: TextStyle(
                                         fontSize: 24,
@@ -243,21 +309,22 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: width*0.02),
+                              margin: EdgeInsets.only(left: width * 0.02),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: List.generate(3,(index){
-                                  return  Text(
-                                    "AAA",
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w300,
-                                        fontFamily: 'Oswald'),
-                                  );
-                                })
-                              ),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: List.generate(3, (index) {
+                                    var actions = ['ASS', 'GOL', 'DRB'];
+                                    return Text(
+                                      actions[index],
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Oswald'),
+                                    );
+                                  })),
                             ),
                           ],
                         ),
@@ -371,10 +438,9 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                         decoration: BoxDecoration(
                           // color: Colors.red,
                           image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage('assets/player_card/Slice1.png')
-                          ),
-                          
+                              fit: BoxFit.fill,
+                              image:
+                                  AssetImage('assets/player_card/Slice1.png')),
                         ),
                       ),
                     ),

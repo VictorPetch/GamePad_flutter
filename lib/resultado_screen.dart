@@ -119,449 +119,452 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: WidgetToImage(builder: (key) {
-            return Stack(
-              children: [
-                // #region Background
-                Container(
-                  width: width,
-                  height: height,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/resultados/cadastro_BG.png'),
-                    ),
+          return Stack(
+            children: [
+              // #region Background
+              Container(
+                width: width,
+                height: height,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/resultados/cadastro_BG.png'),
                   ),
                 ),
-                // #endregion
+              ),
+              // #endregion
 
-                Column(
-                  children: [
-                    // #region Review da partida
-                    Container(
-                      height: height * 0.1,
-                      width: width * 0.8,
-                      // color: Colors.red,
-                      margin: EdgeInsets.only(bottom: 10, top: height * 0.025),
-                      child: Center(
-                        child: AutoSizeText(
-                          'REVIEW DA PARTIDA',
-                          minFontSize: 30,
-                          style: TextStyle(
-                              fontFamily: 'BebasNeue',
-                              fontSize: 50,
-                              color: Color(0xff9b9b9b)),
-                        ),
+              Column(
+                children: [
+                  // #region Review da partida
+                  Container(
+                    height: height * 0.1,
+                    width: width * 0.8,
+                    // color: Colors.red,
+                    margin: EdgeInsets.only(bottom: 10, top: height * 0.025),
+                    child: Center(
+                      child: AutoSizeText(
+                        'REVIEW DA PARTIDA',
+                        minFontSize: 30,
+                        style: TextStyle(
+                            fontFamily: 'BebasNeue',
+                            fontSize: 50,
+                            color: Color(0xff9b9b9b)),
                       ),
                     ),
-                    // #endregion
+                  ),
+                  // #endregion
 
-                    // #region Placar
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        //Meu time
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              height: height * 0.11,
-                              width: width * 0.22,
-                              child: Center(
-                                child: Container(),
-                              ),
-                              decoration: BoxDecoration(
-                                // color: Colors.red,
-                                image: DecorationImage(
-                                  fit: BoxFit.contain,
-                                  image: AssetImage(
-                                      'assets/resultados/cadastro_Placar.png'),
-                                ),
+                  // #region Placar
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Meu time
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            height: height * 0.11,
+                            width: width * 0.22,
+                            child: Center(
+                              child: Container(),
+                            ),
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: AssetImage(
+                                    'assets/resultados/cadastro_Placar.png'),
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(left: width * 0.032),
-                              width: width * 0.1,
-                              height: height * 0.07,
-                              // color: Colors.blue,
-                              child: Center(
-                                child: TextFormField(
-                                  controller: golSeuTime,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                      fontFamily: 'BebasNeue',
-                                      fontSize: 33,
-                                      color: Color(0xfff4fe90)),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        // X
-                        Container(
-                          height: height * 0.03,
-                          width: width * 0.15,
-                          decoration: BoxDecoration(
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: width * 0.032),
+                            width: width * 0.1,
+                            height: height * 0.07,
                             // color: Colors.blue,
-                            image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image: AssetImage('assets/resultados/cadastro_X.png'),
-                            ),
-                          ),
-                        ),
-
-                        //Time inimigo
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              height: height * 0.11,
-                              width: width * 0.22,
-                              child: Center(
-                                child: Container(),
-                              ),
-                              decoration: BoxDecoration(
-                                // color: Colors.red,
-                                image: DecorationImage(
-                                  fit: BoxFit.contain,
-                                  image: AssetImage(
-                                      'assets/resultados/cadastro_Placar.png'),
+                            child: Center(
+                              child: TextFormField(
+                                controller: golSeuTime,
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(
+                                    fontFamily: 'BebasNeue',
+                                    fontSize: 33,
+                                    color: Color(0xfff4fe90)),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
                                 ),
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(left: width * 0.032),
-                              width: width * 0.1,
-                              height: height * 0.07,
-                              // color: Colors.blue,
-                              child: Center(
-                                child: TextFormField(
-                                  controller: golTimeInimigo,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                      fontFamily: 'BebasNeue',
-                                      fontSize: 33,
-                                      color: Color(0xfff4fe90)),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    // #endregion
-
-                    // #region Seu time
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          // color: Colors.blue,
-                          width: width * 0.22,
-                          child: Center(
-                            child: AutoSizeText(
-                              'Seu time',
-                              minFontSize: 14,
-                              style: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  fontSize: 18,
-                                  color: Color(0xffc0cc46)),
-                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: width * 0.15,
-                        ),
-                        Container(
-                          // color: Colors.blue,
-                          width: width * 0.22,
-                          child: Center(
-                            child: AutoSizeText(
-                              'Adversário',
-                              minFontSize: 14,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  fontSize: 18,
-                                  color: Color(0xffc0cc46)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    // #endregion
+                        ],
+                      ),
 
-                    // #region Graph region
-                    Center(
-                      child: Container(
-                        padding: EdgeInsets.all(15),
-                        width: width * 0.9,
-                        height: height * 0.25,
+                      // X
+                      Container(
+                        height: height * 0.03,
+                        width: width * 0.15,
                         decoration: BoxDecoration(
-                          color: Colors.red,
+                          // color: Colors.blue,
                           image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage('assets/resultados/Graph.png'),
+                            fit: BoxFit.contain,
+                            image:
+                                AssetImage('assets/resultados/cadastro_X.png'),
                           ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: RadarChart(
-                                length: 6,
-                                initialAngle: 0,
-                                radialColor: Colors.transparent,
-                                radialStroke: 2,
-                                backgroundColor: Colors.transparent,
-                                radars: [
-                                  RadarTile(
-                                    values: [
-                                      dribleErrado > 0
-                                          ? dribleErrado /
-                                              (dribleErrado + dribleCerto)
-                                          : 0.0,
-                                      1,
-                                      chuteErrado > 0
-                                          ? chuteErrado / (chuteErrado + chuteCerto)
-                                          : 0.0,
-                                      1,
-                                      desarmeErrado > 0
-                                          ? desarmeErrado /
-                                              (desarmeCerto + desarmeErrado)
-                                          : 0.0,
-                                      passeErrado > 0.0
-                                          ? passeErrado / (passeErrado + passeCerto)
-                                          : 0.0,
-                                    ],
-                                    borderColor: Color(0xfff6615b),
-                                    backgroundColor: Colors.transparent,
-                                    borderStroke: 2,
-                                  ),
-                                  RadarTile(
-                                    values: [
-                                      dribleCerto > 0
-                                          ? dribleCerto /
-                                              (dribleErrado + dribleCerto)
-                                          : 0.0,
-                                      golCerto,
-                                      chuteCerto > 0
-                                          ? chuteCerto / (chuteErrado + chuteCerto)
-                                          : 0.0,
-                                      assisCerto,
-                                      desarmeCerto > 0
-                                          ? desarmeCerto /
-                                              (desarmeCerto + desarmeErrado)
-                                          : 0.0,
-                                      passeCerto > 0.0
-                                          ? passeCerto / (passeErrado + passeCerto)
-                                          : 0.0,
-                                    ],
-                                    borderColor: Color(0xff78ba68),
-                                    backgroundColor: Colors.transparent,
-                                    borderStroke: 2,
-                                  ),
-                                ],
-                                radius: (width * 0.4) > height * 0.18
-                                    ? height * 0.09
-                                    : width * 0.2,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                    // #endregion
 
-                    // #region List
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(top: 20),
-                        // color: Colors.red,
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          children: [
-                            ListTile(
+                      //Time inimigo
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            height: height * 0.11,
+                            width: width * 0.22,
+                            child: Center(
+                              child: Container(),
+                            ),
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: AssetImage(
+                                    'assets/resultados/cadastro_Placar.png'),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(left: width * 0.032),
+                            width: width * 0.1,
+                            height: height * 0.07,
+                            // color: Colors.blue,
+                            child: Center(
+                              child: TextFormField(
+                                controller: golTimeInimigo,
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(
+                                    fontFamily: 'BebasNeue',
+                                    fontSize: 33,
+                                    color: Color(0xfff4fe90)),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // #endregion
+
+                  // #region Seu time
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        // color: Colors.blue,
+                        width: width * 0.22,
+                        child: Center(
+                          child: AutoSizeText(
+                            'Seu time',
+                            minFontSize: 14,
+                            style: TextStyle(
+                                fontFamily: 'BebasNeue',
+                                fontSize: 18,
+                                color: Color(0xffc0cc46)),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: width * 0.15,
+                      ),
+                      Container(
+                        // color: Colors.blue,
+                        width: width * 0.22,
+                        child: Center(
+                          child: AutoSizeText(
+                            'Adversário',
+                            minFontSize: 14,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontFamily: 'BebasNeue',
+                                fontSize: 18,
+                                color: Color(0xffc0cc46)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // #endregion
+
+                  // #region Graph region
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      width: width * 0.9,
+                      height: height * 0.25,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage('assets/resultados/Graph.png'),
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: RadarChart(
+                              length: 6,
+                              initialAngle: 0,
+                              radialColor: Colors.transparent,
+                              radialStroke: 2,
+                              backgroundColor: Colors.transparent,
+                              radars: [
+                                RadarTile(
+                                  values: [
+                                    dribleErrado > 0
+                                        ? dribleErrado /
+                                            (dribleErrado + dribleCerto)
+                                        : 0.0,
+                                    1,
+                                    chuteErrado > 0
+                                        ? chuteErrado /
+                                            (chuteErrado + chuteCerto)
+                                        : 0.0,
+                                    1,
+                                    desarmeErrado > 0
+                                        ? desarmeErrado /
+                                            (desarmeCerto + desarmeErrado)
+                                        : 0.0,
+                                    passeErrado > 0.0
+                                        ? passeErrado /
+                                            (passeErrado + passeCerto)
+                                        : 0.0,
+                                  ],
+                                  borderColor: Color(0xfff6615b),
+                                  backgroundColor: Colors.transparent,
+                                  borderStroke: 2,
+                                ),
+                                RadarTile(
+                                  values: [
+                                    dribleCerto > 0
+                                        ? dribleCerto /
+                                            (dribleErrado + dribleCerto)
+                                        : 0.0,
+                                    golCerto,
+                                    chuteCerto > 0
+                                        ? chuteCerto /
+                                            (chuteErrado + chuteCerto)
+                                        : 0.0,
+                                    assisCerto,
+                                    desarmeCerto > 0
+                                        ? desarmeCerto /
+                                            (desarmeCerto + desarmeErrado)
+                                        : 0.0,
+                                    passeCerto > 0.0
+                                        ? passeCerto /
+                                            (passeErrado + passeCerto)
+                                        : 0.0,
+                                  ],
+                                  borderColor: Color(0xff78ba68),
+                                  backgroundColor: Colors.transparent,
+                                  borderStroke: 2,
+                                ),
+                              ],
+                              radius: (width * 0.4) > height * 0.18
+                                  ? height * 0.09
+                                  : width * 0.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // #endregion
+
+                  // #region List
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 20),
+                      // color: Colors.red,
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        children: [
+                          ListTile(
+                            width: width,
+                            height: height,
+                            action: 'Gol',
+                            alliedPoints: golCerto.toInt(),
+                            enemyPoints: 0,
+                            // enemyPoints: golCerto.toInt() +
+                            //     int.parse(golSeuTime.text)
+                          ),
+                          ListTile(
                               width: width,
                               height: height,
-                              action: 'Gol',
-                              alliedPoints: golCerto.toInt(),
-                              enemyPoints: 0,
-                              // enemyPoints: golCerto.toInt() +
-                              //     int.parse(golSeuTime.text)
-                            ),
-                            ListTile(
-                                width: width,
-                                height: height,
-                                action: 'Assistência',
-                                alliedPoints: assisCerto.toInt(),
-                                // enemyPoints: assisErrado.toInt()
-                                enemyPoints: 0),
-                            ListTile(
-                                width: width,
-                                height: height,
-                                action: 'Passe',
-                                alliedPoints: passeCerto.toInt(),
-                                enemyPoints: passeErrado.toInt()),
-                            ListTile(
-                                width: width,
-                                height: height,
-                                action: 'Chute ao Gol',
-                                alliedPoints: chuteCerto.toInt(),
-                                enemyPoints: chuteErrado.toInt()),
-                            ListTile(
-                                width: width,
-                                height: height,
-                                action: 'Desarme',
-                                alliedPoints: desarmeCerto.toInt(),
-                                enemyPoints: desarmeErrado.toInt()),
-                            ListTile(
-                                width: width,
-                                height: height,
-                                action: 'Drible',
-                                alliedPoints: dribleCerto.toInt(),
-                                enemyPoints: dribleErrado.toInt()),
-                            Row(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 28),
-                                  // color: Colors.blue,
-                                  height: height * 0.02,
-                                  width: width * 0.3,
+                              action: 'Assistência',
+                              alliedPoints: assisCerto.toInt(),
+                              // enemyPoints: assisErrado.toInt()
+                              enemyPoints: 0),
+                          ListTile(
+                              width: width,
+                              height: height,
+                              action: 'Passe',
+                              alliedPoints: passeCerto.toInt(),
+                              enemyPoints: passeErrado.toInt()),
+                          ListTile(
+                              width: width,
+                              height: height,
+                              action: 'Chute ao Gol',
+                              alliedPoints: chuteCerto.toInt(),
+                              enemyPoints: chuteErrado.toInt()),
+                          ListTile(
+                              width: width,
+                              height: height,
+                              action: 'Desarme',
+                              alliedPoints: desarmeCerto.toInt(),
+                              enemyPoints: desarmeErrado.toInt()),
+                          ListTile(
+                              width: width,
+                              height: height,
+                              action: 'Drible',
+                              alliedPoints: dribleCerto.toInt(),
+                              enemyPoints: dribleErrado.toInt()),
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 28),
+                                // color: Colors.blue,
+                                height: height * 0.02,
+                                width: width * 0.3,
+                                child: AutoSizeText(
+                                  'Cartões',
+                                  maxLines: 1,
+                                  minFontSize: 6,
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 15,
+                                    color: Color(0xffc0cc46),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                height: height * 0.02,
+                                width: width * 0.1,
+                                decoration: BoxDecoration(
+                                    // color: Colors.blue,
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/resultados/cadastro_cardRed.png'))),
+                                child: Center(
                                   child: AutoSizeText(
-                                    'Cartões',
+                                    redCards.toInt().toString(),
                                     maxLines: 1,
                                     minFontSize: 6,
                                     style: TextStyle(
                                       fontFamily: 'Roboto',
                                       fontSize: 15,
-                                      color: Color(0xffc0cc46),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 15),
-                                  height: height * 0.02,
-                                  width: width * 0.1,
-                                  decoration: BoxDecoration(
-                                      // color: Colors.blue,
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/resultados/cadastro_cardRed.png'))),
-                                  child: Center(
-                                    child: AutoSizeText(
-                                      redCards.toInt().toString(),
-                                      maxLines: 1,
-                                      minFontSize: 6,
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 15),
-                                  height: height * 0.02,
-                                  width: width * 0.1,
-                                  decoration: BoxDecoration(
-                                      // color: Colors.blue,
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/resultados/cadastro_cardYellow.png'))),
-                                  child: Center(
-                                    child: AutoSizeText(
-                                      redCards.toInt().toString(),
-                                      maxLines: 1,
-                                      minFontSize: 6,
-                                      style: TextStyle(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // #endregion
-
-                    // #region Final button
-                    isShared
-                        ? Container()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              InkWell(
-                                onTap: () async {
-                                  setState(() {
-                                    isShared = true;
-                                  });
-                                  final bytes = await Utils.capture(key);
-                                  setState(() {
-                                    this.bytes = bytes;
-                                  });
-                                  await Utils.createFileFromString(bytes);
-
-                                  setState(() {
-                                    isShared = false;
-                                    this.bytes = null;
-                                  });
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(right: 20, bottom: 20),
-                                  height: height * 0.07,
-                                  width: width * 0.2,
-                                  decoration: BoxDecoration(
-                                    // color: Colors.green,
-                                    image: DecorationImage(
-                                      fit: BoxFit.contain,
-                                      image: AssetImage(
-                                          'assets/resultados/share_button.png'),
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              new PlayerCard()));
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(right: 20, bottom: 20),
-                                  height: height * 0.07,
-                                  width: width * 0.2,
-                                  decoration: BoxDecoration(
-                                    // color: Colors.green,
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                height: height * 0.02,
+                                width: width * 0.1,
+                                decoration: BoxDecoration(
+                                    // color: Colors.blue,
                                     image: DecorationImage(
-                                      fit: BoxFit.contain,
-                                      image: AssetImage(
-                                          'assets/resultados/cadastro_check.png'),
+                                        image: AssetImage(
+                                            'assets/resultados/cadastro_cardYellow.png'))),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    redCards.toInt().toString(),
+                                    maxLines: 1,
+                                    minFontSize: 6,
+                                    style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 15,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                    // #endregion
-                  ],
-                ),
-              ],
-            );
-          }
-        ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // #endregion
+
+                  // #region Final button
+                  isShared
+                      ? Container()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  isShared = true;
+                                });
+                                final bytes = await Utils.capture(key);
+                                setState(() {
+                                  this.bytes = bytes;
+                                });
+                                await Utils.createFileFromString(bytes);
+
+                                setState(() {
+                                  isShared = false;
+                                  this.bytes = null;
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(right: 20, bottom: 20),
+                                height: height * 0.07,
+                                width: width * 0.2,
+                                decoration: BoxDecoration(
+                                  // color: Colors.green,
+                                  image: DecorationImage(
+                                    fit: BoxFit.contain,
+                                    image: AssetImage(
+                                        'assets/resultados/share_button.png'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        new PlayerCard(widget.results)));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(right: 20, bottom: 20),
+                                height: height * 0.07,
+                                width: width * 0.2,
+                                decoration: BoxDecoration(
+                                  // color: Colors.green,
+                                  image: DecorationImage(
+                                    fit: BoxFit.contain,
+                                    image: AssetImage(
+                                        'assets/resultados/cadastro_check.png'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                  // #endregion
+                ],
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
