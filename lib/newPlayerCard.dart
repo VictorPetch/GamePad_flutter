@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ies_calculator/calculoNotas.dart';
 import 'package:ies_calculator/main.dart';
 import 'package:ies_calculator/resultModel.dart';
+import 'package:ies_calculator/resultado_screen.dart';
 import 'package:ies_calculator/utils/utils.dart';
 import 'package:ies_calculator/utils/widget_to_image.dart';
 
@@ -52,12 +53,119 @@ class PlayerCard extends StatefulWidget {
 }
 
 class _PlayerCardScreenState extends State<PlayerCard> {
-  
   GlobalKey key;
   Uint8List bytes;
   bool _isShared = false;
   List<int> actionsTotal;
   List<int> actionsCorretas;
+  int notaPasse;
+  int notaChute;
+  int notaDesarme;
+  int notaAssistencia; //n tem nota, eh só a quantidade de assistencias
+  int notaGol; // N tem nota, é só a quantidade de gols
+  int notaDrible;
+
+  double notaPasseCalculo(String modalidade) {
+    final TOTALPASSE = CALCULO_NOTAS[widget.results.idadeSeries]['TOTALPASSE'];
+    final MODALIDADE_MULT = CALCULO_NOTAS['MODALIDADE'][modalidade];
+    final PASSE_CERTO = CALCULO_NOTAS[widget.results.idadeSeries]['PASSECERTO'];
+    final ASSISTENCIA =
+        CALCULO_NOTAS[widget.results.idadeSeries]['ASSISTENCIA'];
+    double notaPassesTotal;
+    double notaPassesCertos;
+    double porcentagemAcerto;
+    double notaAssistencias;
+
+    //Passe
+    notaPassesTotal = actionsTotal[0] *
+        10 /
+        (TOTALPASSE *MODALIDADE_MULT);
+
+    //Assistencias
+    notaAssistencias = actionsTotal[3] * 10 / (ASSISTENCIA * MODALIDADE_MULT);
+
+    if (actionsCorretas[0] == 0)
+      notaPassesCertos = 0;
+    else {
+      //Passes Certos
+      porcentagemAcerto = actionsCorretas[0] / actionsTotal[0];
+      notaPassesCertos =
+          (porcentagemAcerto) * 10 / (PASSE_CERTO * MODALIDADE_MULT);
+    }
+
+    if (notaPassesTotal > 10) notaPassesTotal = 10;
+    if (notaAssistencias > 10) notaAssistencias = 10;
+    if (notaPassesCertos > 10) notaPassesCertos = 10;
+
+    return (notaPassesTotal + notaPassesCertos + notaAssistencias) / 3;
+  }
+
+  double notaChuteCalculo(String modalidade) {
+    final TOTALCHUTES = CALCULO_NOTAS[widget.results.idadeSeries]['CHUTE'];
+    final MODALIDADE_MULT = CALCULO_NOTAS['MODALIDADE'][modalidade];
+    final CHUTECERTOS = CALCULO_NOTAS[widget.results.idadeSeries]['CHUTEAOGOL'];
+    final GOL = CALCULO_NOTAS[widget.results.idadeSeries]['GOL'];
+    double notaChutesTotal;
+    double notaChutesCertos;
+    double porcentagemAcerto;
+    double notaGol;
+
+    //Passe
+    notaChutesTotal = actionsTotal[1] * 10 / (TOTALCHUTES * MODALIDADE_MULT);
+    //Assistencias
+    notaGol = actionsTotal[4] * 10 / (GOL * MODALIDADE_MULT);
+    if (actionsCorretas[1] == 0)
+      notaChutesCertos = 0;
+    else {
+      //Passes Certos
+      porcentagemAcerto = actionsCorretas[0] / actionsTotal[0];
+      notaChutesCertos =
+          (porcentagemAcerto) * 10 / (CHUTECERTOS * MODALIDADE_MULT);
+    }
+
+    if (notaChutesTotal > 10) notaChutesTotal = 10;
+    if (notaGol > 10) notaGol = 10;
+    if (notaChutesCertos > 10) notaChutesCertos = 10;
+
+    return (notaChutesTotal + notaChutesCertos + notaGol) / 3;
+  }
+
+  double notaDesarmeCalculo(String modalidade) {
+    final TOTALDESARMES = CALCULO_NOTAS[widget.results.idadeSeries]['DESARMES'];
+    final MODALIDADE_MULT = CALCULO_NOTAS['MODALIDADE'][modalidade];
+    double notaDesarmesTotal;
+
+    notaDesarmesTotal =
+        actionsTotal[2] * 10 / (TOTALDESARMES * MODALIDADE_MULT);
+    if (notaDesarmesTotal > 10) notaDesarmesTotal = 10;
+
+    return notaDesarmesTotal;
+  }
+
+  double notaDribleCalculo(String modalidade) {
+    final TOTALDRIBLES = CALCULO_NOTAS[widget.results.idadeSeries]['DRIBLES'];
+    final DRIBLESCERTOS =
+        CALCULO_NOTAS[widget.results.idadeSeries]['DRIBLESCERTOS'];
+    final MODALIDADE_MULT = CALCULO_NOTAS['MODALIDADE'][modalidade];
+    double notaDriblesTotal;
+    double notaDriblesCertos;
+    double porcentagemAcerto;
+
+    notaDriblesTotal = actionsTotal[5] * 10 / (TOTALDRIBLES * MODALIDADE_MULT);
+    if (actionsCorretas[5] == 0)
+      notaDriblesCertos = 0;
+    else {
+      //Passes Certos
+      porcentagemAcerto = actionsCorretas[5] / actionsTotal[5];
+      notaDriblesCertos =
+          (porcentagemAcerto) * 10 / (DRIBLESCERTOS * MODALIDADE_MULT);
+    }
+
+    if (notaDriblesTotal > 10) notaDriblesTotal = 10;
+    if (notaDriblesCertos > 10) notaDriblesCertos = 10;
+
+    return (notaDriblesCertos + notaDriblesTotal) / 2;
+  }
 
   @override
   void initState() {
@@ -102,58 +210,19 @@ class _PlayerCardScreenState extends State<PlayerCard> {
     //Idade ta mockada pra 20
     //A regra de 3 eh: action * 10 / (nota da tabela * modalidade)
     String modalidade;
-    if(widget.results.modalidade.contains('Futebol') || widget.results.modalidade.contains('Football')){
+    if (widget.results.modalidade.contains('Futebol') ||
+        widget.results.modalidade.contains('Football')) {
       modalidade = 'FOOTBALL';
-    }
-    else if(widget.results.modalidade.contains('Futsal')){
-       modalidade = 'FUTSAL';
-    }
-    else modalidade = 'SOCIETY';
+    } else if (widget.results.modalidade.contains('Futsal')) {
+      modalidade = 'FUTSAL';
+    } else
+      modalidade = 'SOCIETY';
 
-    //Passe
-    double notaPasses = actionsTotal[0] * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['TOTALPASSE'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+    notaPasse = notaPasseCalculo(modalidade).toInt();
+    notaChute = notaChuteCalculo(modalidade).toInt();
+    notaDrible = notaDribleCalculo(modalidade).toInt();
+    notaDesarme = notaDesarmeCalculo(modalidade).toInt();
 
-    double notaPassesCertos = (actionsCorretas[0]/actionsTotal[0]).toDouble() * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['PASSECERTO'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-
-    if(actionsTotal[3] > 10) actionsTotal[3] = 10; //Eh 10+ assist pra tirar nota 10
-    double notaAssistencias = actionsTotal[3] * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['ASSISTENCIA'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-
-    //Gol
-    double notaChutes = actionsTotal[0] * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['CHUTE'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-
-    double notaChutesAoGol = (actionsCorretas[0]/actionsTotal[0]).toDouble() * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['CHUTEAOGOL'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-    
-    if(actionsTotal[3] > 10) actionsTotal[3] = 10; 
-    double notaGol = actionsTotal[3] * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['GOL'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-
-    //Desarmes
-    if(actionsTotal[2] > 20) actionsTotal[2] = 20; 
-    double notaDesarmes = actionsTotal[2] * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['DESARME'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-
-    //Drible
-    double notaDribles = actionsTotal[5] * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['DRIBLES'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-
-    double notaDriblesCertos = (actionsCorretas[5]/actionsTotal[5]).toDouble() * 10 / 
-    (CALCULO_NOTAS[widget.results.idadeSeries]['DRIBLESCERTOS'] * 
-    CALCULO_NOTAS['MODALIDADE'][modalidade]);
-
-    
     super.initState();
   }
 
@@ -183,7 +252,7 @@ class _PlayerCardScreenState extends State<PlayerCard> {
             child: Container(
               height: height,
               width: width,
-              color: Colors.white,
+              color: Colors.black,
               child: Stack(
                 children: [
                   Align(
@@ -191,15 +260,16 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                     child: Container(
                       width: width * 0.8,
                       height: height * 0.65,
-                      child: WidgetToImage(builder: (key) {
-                        return Stack(
+                      child: RepaintBoundary(
+                        key: key,
+                        child: Stack(
                           children: [
                             //Card Image
                             // #region
                             Center(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  // color: Colors.red,
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image: AssetImage(_pathImage)),
@@ -292,12 +362,12 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                               child: Container(
                                 width: width * 0.8 * 0.45,
                                 height: height * 0.65 * 0.2,
-                                color: Colors.green,
+                                // color: Colors.green,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Container(
-                                      color: Colors.red,
+                                      // color: Colors.red,
                                       width: width * 0.8 * 0.07,
                                       child: Column(
                                         crossAxisAlignment:
@@ -306,24 +376,15 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                                             MainAxisAlignment.spaceAround,
                                         children: List.generate(3, (index) {
                                           var notas = [
-                                            this.actionsCorretas[0] > 0
-                                                ? this.actionsCorretas[0] /
-                                                    this.actionsTotal[0]
-                                                : 0,
-                                            this.actionsCorretas[1] > 0
-                                                ? this.actionsCorretas[1] /
-                                                    this.actionsTotal[1]
-                                                : 0,
-                                            this.actionsCorretas[2] > 0
-                                                ? this.actionsCorretas[2] /
-                                                    this.actionsTotal[2]
-                                                : 0,
+                                            notaPasse,
+                                            notaChute,
+                                            notaDesarme,
                                           ];
                                           return Container(
                                             height: height * 0.04,
                                             child: Center(
                                               child: AutoSizeText(
-                                                (notas[index] * 10)
+                                                (notas[index])
                                                     .toInt()
                                                     .toString(),
                                                 maxLines: 1,
@@ -339,7 +400,7 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                                       ),
                                     ),
                                     Container(
-                                      color: Colors.blue,
+                                      // color: Colors.blue,
                                       width: width * 0.8 * 0.12,
                                       margin: EdgeInsets.only(
                                           left: width * 0.8 * 0.02),
@@ -368,7 +429,7 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                                           })),
                                     ),
                                     Container(
-                                      color: Colors.red,
+                                      // color: Colors.red,
                                       width: width * 0.8 * 0.07,
                                       margin: EdgeInsets.only(
                                           left: width * 0.8 * 0.02),
@@ -379,24 +440,15 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                                             MainAxisAlignment.spaceAround,
                                         children: List.generate(3, (index) {
                                           var notas = [
-                                            this.actionsCorretas[3] > 0
-                                                ? this.actionsCorretas[3] /
-                                                    this.actionsTotal[3]
-                                                : 0,
-                                            this.actionsCorretas[4] > 0
-                                                ? this.actionsCorretas[4] /
-                                                    this.actionsTotal[4]
-                                                : 0,
-                                            this.actionsCorretas[5] > 0
-                                                ? this.actionsCorretas[5] /
-                                                    this.actionsTotal[5]
-                                                : 0,
+                                            this.actionsTotal[3],
+                                            this.actionsTotal[4],
+                                            notaDrible,
                                           ];
                                           return Container(
                                             height: height * 0.04,
                                             child: Center(
                                               child: AutoSizeText(
-                                                (notas[index] * 10)
+                                                (notas[index])
                                                     .toInt()
                                                     .toString(),
                                                 maxLines: 1,
@@ -413,7 +465,7 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                                     ),
                                     Container(
                                       width: width * 0.8 * 0.12,
-                                      color: Colors.blue,
+                                      // color: Colors.blue,
                                       margin: EdgeInsets.only(
                                           left: width * 0.8 * 0.02),
                                       child: Column(
@@ -476,7 +528,7 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                               child: Container(
                                 width: width * 0.8 * 0.45,
                                 height: height * 0.65 * 0.03,
-                                color: Colors.blue,
+                                // color: Colors.blue,
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
                                   child: Text(
@@ -564,8 +616,8 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                             ),
                             // #endregion
                           ],
-                        );
-                      }),
+                        ),
+                      ),
                     ),
                   ),
                   //Buttons
@@ -577,7 +629,7 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                       padding: EdgeInsets.fromLTRB(width * 0.1, height * 0.03,
                           width * 0.1, height * 0.03),
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          // color: Colors.red,
                           image: DecorationImage(
                               fit: BoxFit.contain,
                               image: AssetImage(
@@ -592,9 +644,9 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                               child: Image.asset(
                                   'assets/player_card/backButton.png')),
                           GestureDetector(
-                            onTap: (){
-                              shareImage(bytes, key);
-                            },
+                              onTap: () {
+                                shareImage(bytes, key);
+                              },
                               child: Image.asset(
                                   'assets/player_card/shareButton.png')),
                           Image.asset('assets/player_card/downloadButton.png'),
