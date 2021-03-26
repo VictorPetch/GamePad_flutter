@@ -10,21 +10,22 @@ import 'package:intl/intl.dart';
 
 // This main is to be used when you want to test different screen sizes
 ResultsModel results = new ResultsModel();
-void main() => runApp(
-      DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => MaterialApp(
-          home: CadastroScreen(results),
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-        ), // Wrap your app
-      ),
-    );
+// void main() => runApp(
+//       DevicePreview(
+//         enabled: !kReleaseMode,
+//         builder: (context) => MaterialApp(
+//           home: CadastroScreen(results),
+//           locale: DevicePreview.locale(context),
+//           builder: DevicePreview.appBuilder,
+//         ), // Wrap your app
+//       ),
+//     );
 
 // void main() => runApp(CadastroScreen());
 
 var nomeCampeonato = TextEditingController(text: '');
 var posicao = TextEditingController(text: '');
+var modalidade = TextEditingController(text: '');
 var nomeTime = TextEditingController(text: '');
 var timeAdversario = TextEditingController(text: '');
 var local = TextEditingController(text: '');
@@ -32,7 +33,8 @@ var data = TextEditingController(text: '');
 var red = Colors.red;
 String notification = '';
 int posicaoGroupValue;
-var expanded = ExpandableController();
+var expandedPosition = ExpandableController();
+var expandedModalidade = ExpandableController();
 String dropDownText = '';
 
 // ignore: must_be_immutable
@@ -145,9 +147,10 @@ class _CadastroScreenState extends State<CadastroScreen> {
                             'Nome do campeonato',
                           ),
                           // #endregion
-
+                          
+                          //Posição
                           ExpandableNotifier(
-                            controller: expanded,
+                            controller: expandedPosition,
                             child: ExpandablePanel(
                               // #region Collapsed
                               collapsed: Container(
@@ -227,49 +230,164 @@ class _CadastroScreenState extends State<CadastroScreen> {
                                             width: width,
                                             text: "Goleiro",
                                             englishText: 'Goalkeeper',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
                                           ),
                                           posicaoTile(
                                             width: width,
                                             text: "Zagueiro",
                                             englishText: 'CentreBack',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
                                           ),
                                           posicaoTile(
                                             width: width,
                                             text: "Lateral",
                                             englishText: 'WingBack',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
                                           ),
                                           posicaoTile(
                                             width: width,
                                             text: "Volante",
                                             englishText: 'DefensiveMidfielder',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
                                           ),
                                           posicaoTile(
                                             width: width,
                                             text: "Meia Extremo(Ponta)",
                                             englishText: 'SideMidfielder',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
                                           ),
                                           posicaoTile(
                                             width: width,
                                             text: "Meia Articulador",
                                             englishText: 'CentreMidfielder',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
                                           ),
                                           posicaoTile(
                                             width: width,
                                             text: "Atacante",
                                             englishText: 'Striker',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
                                           ),
                                           posicaoTile(
                                             width: width,
                                             text: "Universal",
                                             englishText: 'Universal',
-                                            expanded: expanded,
+                                            expanded: expandedPosition,
+                                            controller: posicao
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )),
+                              // #endregion
+                            ),
+                          ),
+                         
+                          //Modalidade
+                          ExpandableNotifier(
+                            controller: expandedModalidade,
+                            child: ExpandablePanel(
+                              // #region Collapsed
+                              collapsed: Container(
+                                margin: EdgeInsets.only(bottom: height * 0.013),
+                                width: width,
+                                height: height * 0.08,
+                                decoration: BoxDecoration(
+                                  // color: Colors.red,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage(
+                                        'assets/cadastro/cadastro_dropdown.png'),
+                                  ),
+                                ),
+                                padding: EdgeInsets.only(right: width * 0.01),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.only(left: width * 0.05),
+                                        alignment: Alignment.centerLeft,
+                                        height: height * 0.1,
+                                        // color: red,
+                                        child: AutoSizeText(
+                                          posicao.text.isEmpty
+                                              ? 'Modalidade'
+                                              : modalidade.text,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                    ExpandableButton(
+                                      child: Container(
+                                        width: width * 0.13,
+                                        height: height * 0.08,
+                                        //  color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // #endregion
+
+                              // #region Expanded
+                              expanded: Container(
+                                  margin:
+                                      EdgeInsets.only(bottom: height * 0.013),
+                                  width: width,
+                                  height: height * 0.36,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.red,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          'assets/cadastro/Componente3.png'),
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.only(
+                                      right: width * 0.01,
+                                      bottom: height * 0.01),
+                                  child: Container(
+                                    width: width * 0.55,
+                                    // color: red,
+                                    margin: EdgeInsets.only(top: height * 0.09),
+                                    child: SingleChildScrollView(
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Futebol de Campo",
+                                            englishText: 'Football',
+                                            expanded: expandedModalidade,
+                                            controller: modalidade
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Futsal",
+                                            englishText: 'Futsal',
+                                            expanded: expandedModalidade,
+                                            controller: modalidade
+                                          ),
+                                          posicaoTile(
+                                            width: width,
+                                            text: "Futebol Society",
+                                            englishText: 'Society Football',
+                                            expanded: expandedModalidade,
+                                            controller: modalidade
                                           ),
                                         ],
                                       ),
@@ -363,6 +481,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                             //Ir pra outra pagina
                             widget.results.nomeCampeonato = nomeCampeonato.text;
                             widget.results.posicao = posicao.text;
+                            widget.results.modalidade = modalidade.text;
                             widget.results.nomeTime = nomeTime.text;
                             widget.results.timeAdversario = timeAdversario.text;
                             widget.results.local = local.text;
@@ -375,6 +494,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                           print('Dentro do modelo tem os seguintes campos:');
                           print(widget.results.nomeCampeonato);
                           print(widget.results.posicao);
+                          print(widget.results.modalidade);
                           print(widget.results.nomeTime);
                           print(widget.results.timeAdversario);
                           print(widget.results.local);
@@ -411,6 +531,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
       {double width,
       String text,
       String englishText,
+      TextEditingController controller,
       ExpandableController expanded}) {
     return Container(
       width: width * 0.55,
@@ -420,7 +541,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
         onTap: () {
           setState(() {
             expanded.toggle();
-            posicao.text = text;
+            controller.text = text;
           });
         },
         child: AutoSizeText(

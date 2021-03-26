@@ -1,5 +1,7 @@
 import 'dart:typed_data';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:ies_calculator/calculoNotas.dart';
 import 'package:ies_calculator/main.dart';
 import 'package:ies_calculator/resultModel.dart';
 import 'package:ies_calculator/utils/utils.dart';
@@ -50,6 +52,7 @@ class PlayerCard extends StatefulWidget {
 }
 
 class _PlayerCardScreenState extends State<PlayerCard> {
+  
   GlobalKey key;
   Uint8List bytes;
   bool _isShared = false;
@@ -95,12 +98,68 @@ class _PlayerCardScreenState extends State<PlayerCard> {
         }
       });
     }
+    //TODO calcular a nota com base nas actions
+    //Idade ta mockada pra 20
+    //A regra de 3 eh: action * 10 / (nota da tabela * modalidade)
+    String modalidade;
+    if(widget.results.modalidade.contains('Futebol') || widget.results.modalidade.contains('Football')){
+      modalidade = 'FOOTBALL';
+    }
+    else if(widget.results.modalidade.contains('Futsal')){
+       modalidade = 'FUTSAL';
+    }
+    else modalidade = 'SOCIETY';
+
+    //Passe
+    double notaPasses = actionsTotal[0] * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['TOTALPASSE'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    double notaPassesCertos = (actionsCorretas[0]/actionsTotal[0]).toDouble() * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['PASSECERTO'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    if(actionsTotal[3] > 10) actionsTotal[3] = 10; //Eh 10+ assist pra tirar nota 10
+    double notaAssistencias = actionsTotal[3] * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['ASSISTENCIA'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    //Gol
+    double notaChutes = actionsTotal[0] * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['CHUTE'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    double notaChutesAoGol = (actionsCorretas[0]/actionsTotal[0]).toDouble() * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['CHUTEAOGOL'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+    
+    if(actionsTotal[3] > 10) actionsTotal[3] = 10; 
+    double notaGol = actionsTotal[3] * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['GOL'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    //Desarmes
+    if(actionsTotal[2] > 20) actionsTotal[2] = 20; 
+    double notaDesarmes = actionsTotal[2] * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['DESARME'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    //Drible
+    double notaDribles = actionsTotal[5] * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['DRIBLES'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    double notaDriblesCertos = (actionsCorretas[5]/actionsTotal[5]).toDouble() * 10 / 
+    (CALCULO_NOTAS[widget.results.idadeSeries]['DRIBLESCERTOS'] * 
+    CALCULO_NOTAS['MODALIDADE'][modalidade]);
+
+    
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    String _pathImage = "assets/card_calculadora/gold.png";
+    String _pathImage = "assets/player_card/Group 10 copy 19.png";
     var width = MediaQuery.of(context).size.width;
     var height =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
@@ -124,330 +183,427 @@ class _PlayerCardScreenState extends State<PlayerCard> {
             child: Container(
               height: height,
               width: width,
-              color: Colors.black,
-              child: WidgetToImage(builder: (key) {
-                return Stack(
-                  children: [
-                    Center(
-                      child: Container(
-                        width: width,
-                        height: height,
-                        decoration: BoxDecoration(
-                          ////color: Colors.red,
-                          image: DecorationImage(
-                              fit: BoxFit.fill, image: AssetImage(_pathImage)),
-                        ),
-                      ),
-                    ),
-
-                    // #region Right
-                    _isShared
-                        ? Container()
-                        : Positioned(
-                            right: width * 0.50,
-                            top: height * 0.19,
-                            child: Container(
-                              width: width * 0.10,
-                              height: height * 0.08,
-                              // color: Colors.red,
-                              child: IconButton(
-                                icon: Icon(Icons.share),
-                                onPressed: () {
-                                  shareImage(bytes, key);
-                                },
-                              ),
-                            ),
-                          ),
-                    Positioned(
-                      right: width * 0.17,
-                      top: height * 0.18,
-                      child: Container(
-                          width: width * 0.36,
-                          height: height * 0.18,
-                          //color: Colors.red,
-                          child: Image.asset(
-                            "assets/messi.png",
-                            height: _playerImageHeight,
-                          )),
-                    ),
-                    Positioned(
-                      right: width * 0.15,
-                      top: height * 0.37,
-                      child: Container(
-                        width: width * 0.4,
-                        height: height * 0.08,
-                        //color: Colors.red,
-                        child: Column(
+              color: Colors.white,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      width: width * 0.8,
+                      height: height * 0.65,
+                      child: WidgetToImage(builder: (key) {
+                        return Stack(
                           children: [
-                            Expanded(
+                            //Card Image
+                            // #region
+                            Center(
                               child: Container(
-                                //color: Colors.green,
-                                child: Center(
-                                    child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Text(
-                                    "Jonathan Silva",
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 50,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Oswald'),
-                                  ),
-                                )),
-                              ),
-                            ),
-                            Container(
-                              height: height * 0.04,
-                              //color: Colors.blue,
-                              child: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Text(
-                                  "Goleiro",
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 3,
-                                      fontWeight: FontWeight.w300,
-                                      fontFamily: 'Oswald'),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(_pathImage)),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: width * 0.15,
-                      top: height * 0.48,
-                      child: Container(
-                        width: width * 0.45,
-                        height: height * 0.2,
-                        // color: Colors.green,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: List.generate(3, (index) {
-                                  var notas = [
-                                    this.actionsCorretas[0] > 0
-                                        ? this.actionsCorretas[0] /
-                                            this.actionsTotal[0]
-                                        : 0,
-                                    this.actionsCorretas[1] > 0
-                                        ? this.actionsCorretas[1] /
-                                            this.actionsTotal[1]
-                                        : 0,
-                                    this.actionsCorretas[2] > 0
-                                        ? this.actionsCorretas[2] /
-                                            this.actionsTotal[2]
-                                        : 0,
-                                  ];
-                                  return Text(
-                                    (notas[index] * 10).toInt().toString(),
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Oswald'),
-                                  );
-                                }),
+                            // #endregion
+
+                            //Right
+                            // #region
+                            _isShared
+                                ? Container()
+                                : Positioned(
+                                    right: width * 0.8 * 0.50,
+                                    top: height * 0.65 * 0.19,
+                                    child: Container(
+                                      width: width * 0.8 * 0.10,
+                                      height: height * 0.65 * 0.08,
+                                      // color: Colors.red,
+                                      child: IconButton(
+                                        icon: Icon(Icons.share),
+                                        onPressed: () {
+                                          shareImage(bytes, key);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                            Positioned(
+                              right: width * 0.8 * 0.17,
+                              top: height * 0.65 * 0.18,
+                              child: Container(
+                                  width: width * 0.8 * 0.36,
+                                  height: height * 0.65 * 0.18,
+                                  //color: Colors.red,
+                                  child: Image.asset(
+                                    "assets/messi.png",
+                                    height: _playerImageHeight,
+                                  )),
+                            ),
+                            Positioned(
+                              right: width * 0.8 * 0.15,
+                              top: height * 0.65 * 0.37,
+                              child: Container(
+                                width: width * 0.8 * 0.4,
+                                height: height * 0.65 * 0.08,
+                                //color: Colors.red,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        //color: Colors.green,
+                                        child: Center(
+                                            child: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text(
+                                            "Jonathan Silva",
+                                            textAlign: TextAlign.center,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                fontSize: 50,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: 'Oswald'),
+                                          ),
+                                        )),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: height * 0.65 * 0.04,
+                                      //color: Colors.blue,
+                                      child: FittedBox(
+                                        fit: BoxFit.fitWidth,
+                                        child: Text(
+                                          "Goleiro",
+                                          textAlign: TextAlign.center,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontSize: 3,
+                                              fontWeight: FontWeight.w300,
+                                              fontFamily: 'Oswald'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: width * 0.02),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: List.generate(3, (index) {
-                                    var actions = ['PSS', 'CHT', 'DES'];
-                                    return Text(
-                                      actions[index],
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w300,
-                                          fontFamily: 'Oswald'),
-                                    );
-                                  })),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: width * 0.02),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: List.generate(3, (index) {
-                                  var notas = [
-                                    this.actionsCorretas[3] > 0
-                                        ? this.actionsCorretas[3] /
-                                            this.actionsTotal[3]
-                                        : 0,
-                                    this.actionsCorretas[4] > 0
-                                        ? this.actionsCorretas[4] /
-                                            this.actionsTotal[4]
-                                        : 0,
-                                    this.actionsCorretas[5] > 0
-                                        ? this.actionsCorretas[5] /
-                                            this.actionsTotal[5]
-                                        : 0,
-                                  ];
-                                  return Text(
-                                    (notas[index] * 10).toInt().toString(),
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Oswald'),
-                                  );
-                                }),
+                            Positioned(
+                              right: width * 0.8 * 0.15,
+                              top: height * 0.65 * 0.48,
+                              child: Container(
+                                width: width * 0.8 * 0.45,
+                                height: height * 0.65 * 0.2,
+                                color: Colors.green,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      color: Colors.red,
+                                      width: width * 0.8 * 0.07,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: List.generate(3, (index) {
+                                          var notas = [
+                                            this.actionsCorretas[0] > 0
+                                                ? this.actionsCorretas[0] /
+                                                    this.actionsTotal[0]
+                                                : 0,
+                                            this.actionsCorretas[1] > 0
+                                                ? this.actionsCorretas[1] /
+                                                    this.actionsTotal[1]
+                                                : 0,
+                                            this.actionsCorretas[2] > 0
+                                                ? this.actionsCorretas[2] /
+                                                    this.actionsTotal[2]
+                                                : 0,
+                                          ];
+                                          return Container(
+                                            height: height * 0.04,
+                                            child: Center(
+                                              child: AutoSizeText(
+                                                (notas[index] * 10)
+                                                    .toInt()
+                                                    .toString(),
+                                                maxLines: 1,
+                                                minFontSize: 10,
+                                                style: TextStyle(
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: 'Oswald'),
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                      ),
+                                    ),
+                                    Container(
+                                      color: Colors.blue,
+                                      width: width * 0.8 * 0.12,
+                                      margin: EdgeInsets.only(
+                                          left: width * 0.8 * 0.02),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: List.generate(3, (index) {
+                                            var actions = ['PSS', 'CHT', 'DES'];
+                                            return Container(
+                                              height: height * 0.04,
+                                              child: Center(
+                                                child: AutoSizeText(
+                                                  actions[index],
+                                                  maxLines: 1,
+                                                  minFontSize: 10,
+                                                  style: TextStyle(
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      fontFamily: 'Oswald'),
+                                                ),
+                                              ),
+                                            );
+                                          })),
+                                    ),
+                                    Container(
+                                      color: Colors.red,
+                                      width: width * 0.8 * 0.07,
+                                      margin: EdgeInsets.only(
+                                          left: width * 0.8 * 0.02),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: List.generate(3, (index) {
+                                          var notas = [
+                                            this.actionsCorretas[3] > 0
+                                                ? this.actionsCorretas[3] /
+                                                    this.actionsTotal[3]
+                                                : 0,
+                                            this.actionsCorretas[4] > 0
+                                                ? this.actionsCorretas[4] /
+                                                    this.actionsTotal[4]
+                                                : 0,
+                                            this.actionsCorretas[5] > 0
+                                                ? this.actionsCorretas[5] /
+                                                    this.actionsTotal[5]
+                                                : 0,
+                                          ];
+                                          return Container(
+                                            height: height * 0.04,
+                                            child: Center(
+                                              child: AutoSizeText(
+                                                (notas[index] * 10)
+                                                    .toInt()
+                                                    .toString(),
+                                                maxLines: 1,
+                                                minFontSize: 10,
+                                                style: TextStyle(
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: 'Oswald'),
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width * 0.8 * 0.12,
+                                      color: Colors.blue,
+                                      margin: EdgeInsets.only(
+                                          left: width * 0.8 * 0.02),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: List.generate(3, (index) {
+                                            var actions = ['ASS', 'GOL', 'DRB'];
+                                            return Container(
+                                              height: height * 0.04,
+                                              child: Center(
+                                                child: AutoSizeText(
+                                                  actions[index],
+                                                  maxLines: 1,
+                                                  minFontSize: 10,
+                                                  style: TextStyle(
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      fontFamily: 'Oswald'),
+                                                ),
+                                              ),
+                                            );
+                                          })),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: width * 0.02),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: List.generate(3, (index) {
-                                    var actions = ['ASS', 'GOL', 'DRB'];
-                                    return Text(
-                                      actions[index],
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w300,
-                                          fontFamily: 'Oswald'),
-                                    );
-                                  })),
+                            // #endregion
+
+                            //Bottom lines
+                            // #region
+                            Positioned(
+                              right: width * 0.8 * 0.25,
+                              bottom: height * 0.65 * 0.23,
+                              child: Container(
+                                width: width * 0.8 * 0.5,
+                                height: height * 0.65 * 0.03,
+                                // color: Colors.green,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: AutoSizeText(
+                                    "SÃO PAULO/SP - 03/08/2021",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    minFontSize: 4,
+                                    style: TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Oswald'),
+                                  ),
+                                ),
+                              ),
                             ),
+                            Positioned(
+                              right: width * 0.8 * 0.275,
+                              bottom: height * 0.65 * 0.20,
+                              child: Container(
+                                width: width * 0.8 * 0.45,
+                                height: height * 0.65 * 0.03,
+                                color: Colors.blue,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                    "CAMPEONATO DA CACHOEIRINHA",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Oswald'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: width * 0.8 * 0.35,
+                              bottom: height * 0.65 * 0.165,
+                              child: Container(
+                                width: width * 0.8 * 0.3,
+                                height: height * 0.65 * 0.03,
+                                // color: Colors.red,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: AutoSizeText(
+                                    "TIME DA CIDADE",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    minFontSize: 4,
+                                    style: TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Oswald'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // #endregion
+
+                            //Left
+                            // #region
+                            Positioned(
+                              left: width * 0.8 * 0.17,
+                              top: height * 0.65 * 0.18,
+                              child: Container(
+                                width: width * 0.8 * 0.2,
+                                height: height * 0.65 * 0.1,
+                                //color: Colors.red,
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    "42",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontSize: 41,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Oswald'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: width * 0.8 * 0.17,
+                              top: height * 0.65 * 0.3,
+                              child: Container(
+                                width: width * 0.8 * 0.2,
+                                height: height * 0.65 * 0.1,
+                                //color: Colors.blue,
+                              ),
+                            ),
+                            Positioned(
+                              left: width * 0.8 * 0.2,
+                              top: height * 0.65 * 0.43,
+                              child: Container(
+                                width: width * 0.8 * 0.14,
+                                height: height * 0.65 * 0.25,
+                                decoration: BoxDecoration(
+                                  // color: Colors.red,
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          'assets/player_card/Slice1.png')),
+                                ),
+                              ),
+                            ),
+                            // #endregion
                           ],
-                        ),
-                      ),
+                        );
+                      }),
                     ),
-                    // #endregion
-
-                    // #region Bottom lines
-                    Positioned(
-                      right: width * 0.25,
-                      top: height * 0.73,
-                      child: Container(
-                        width: width * 0.5,
-                        height: height * 0.02,
-                        //color: Colors.green,
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            "SÃO PAULO/SP - 03/08/2021",
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Oswald'),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: width * 0.275,
-                      top: height * 0.75,
-                      child: Container(
-                        width: width * 0.45,
-                        height: height * 0.02,
-                        //color: Colors.blue,
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            "CAMPEONATO DA CACHOEIRINHA",
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Oswald'),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: width * 0.35,
-                      top: height * 0.77,
-                      child: Container(
-                        width: width * 0.3,
-                        height: height * 0.02,
-                        //color: Colors.red,
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            "TIME DA CIDADE",
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Oswald'),
-                          ),
-                        ),
-                      ),
-                    ),
-                    // #endregion
-
-                    // #region Left
-                    Positioned(
-                      left: width * 0.17,
-                      top: height * 0.18,
-                      child: Container(
-                        width: width * 0.2,
-                        height: height * 0.1,
-                        //color: Colors.red,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            "42",
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontSize: 41,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Oswald'),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: width * 0.17,
-                      top: height * 0.3,
-                      child: Container(
-                        width: width * 0.2,
-                        height: height * 0.1,
-                        //color: Colors.blue,
-                      ),
-                    ),
-                    Positioned(
-                      left: width * 0.2,
-                      top: height * 0.43,
-                      child: Container(
-                        width: width * 0.14,
-                        height: height * 0.25,
-                        decoration: BoxDecoration(
-                          // color: Colors.red,
+                  ),
+                  //Buttons
+                  Align(
+                    alignment: Alignment(0, 0.7),
+                    child: Container(
+                      width: width * 0.8,
+                      height: height * 0.13,
+                      padding: EdgeInsets.fromLTRB(width * 0.1, height * 0.03,
+                          width * 0.1, height * 0.03),
+                      decoration: BoxDecoration(
+                          color: Colors.red,
                           image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image:
-                                  AssetImage('assets/player_card/Slice1.png')),
-                        ),
+                              fit: BoxFit.contain,
+                              image: AssetImage(
+                                  'assets/player_card/buttonsBase.png'))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Image.asset(
+                                  'assets/player_card/backButton.png')),
+                          GestureDetector(
+                            onTap: (){
+                              shareImage(bytes, key);
+                            },
+                              child: Image.asset(
+                                  'assets/player_card/shareButton.png')),
+                          Image.asset('assets/player_card/downloadButton.png'),
+                        ],
                       ),
                     ),
-                    // #endregion
-                  ],
-                );
-              }),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

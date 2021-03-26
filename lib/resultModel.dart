@@ -8,9 +8,12 @@ class ResultsModel {
   List<String> timestamp;
   String nomeCampeonato = '';
   String posicao = '';
+  String modalidade = '';
   String nomeTime = '';
   String timeAdversario = '';
   String local = '';
   String data = '';
+  int idadeNumber = 19;
+  String idadeSeries = 'SUB20';
   ResultsModel({this.actionTimeline, this.colorTimeline, this.timestamp});
 }
