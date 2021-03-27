@@ -56,6 +56,9 @@ class _PlayerCardScreenState extends State<PlayerCard> {
   GlobalKey key;
   Uint8List bytes;
   bool _isShared = false;
+  bool backPressioned = false;
+  bool sharePressioned = false;
+  bool downloadPressioned = false;
   List<int> actionsTotal;
   List<int> actionsCorretas;
   int notaPasse;
@@ -77,9 +80,7 @@ class _PlayerCardScreenState extends State<PlayerCard> {
     double notaAssistencias;
 
     //Passe
-    notaPassesTotal = actionsTotal[0] *
-        10 /
-        (TOTALPASSE *MODALIDADE_MULT);
+    notaPassesTotal = actionsTotal[0] * 10 / (TOTALPASSE * MODALIDADE_MULT);
 
     //Assistencias
     notaAssistencias = actionsTotal[3] * 10 / (ASSISTENCIA * MODALIDADE_MULT);
@@ -641,15 +642,74 @@ class _PlayerCardScreenState extends State<PlayerCard> {
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Image.asset(
-                                  'assets/player_card/backButton.png')),
+                              onTapDown: (_) {
+                                setState(() {
+                                  backPressioned = true;
+                                });
+                              },
+                              onTapCancel: () {
+                                setState(() {
+                                  backPressioned = false;
+                                });
+                              },
+                              onTapUp: (_) {
+                                setState(() {
+                                  backPressioned = false;
+                                });
+                              },
+                              child: backPressioned
+                                  ? Image.asset(
+                                      'assets/player_card/backButton_pressed.png')
+                                  : Image.asset(
+                                      'assets/player_card/backButton.png')),
                           GestureDetector(
                               onTap: () {
                                 shareImage(bytes, key);
                               },
-                              child: Image.asset(
-                                  'assets/player_card/shareButton.png')),
-                          Image.asset('assets/player_card/downloadButton.png'),
+                              onTapDown: (_) {
+                                setState(() {
+                                  sharePressioned = true;
+                                });
+                              },
+                              onTapCancel: () {
+                                setState(() {
+                                  sharePressioned = false;
+                                });
+                              },
+                              onTapUp: (_) {
+                                setState(() {
+                                  sharePressioned = false;
+                                });
+                              },
+                              child: sharePressioned
+                                  ? Image.asset(
+                                      'assets/player_card/shareButton_pressed.png')
+                                  : Image.asset(
+                                      'assets/player_card/shareButton.png')),
+                          GestureDetector(
+                              onTap: () {
+                                //TODO download image
+                              },
+                              onTapDown: (_) {
+                                setState(() {
+                                  downloadPressioned = true;
+                                });
+                              },
+                              onTapCancel: () {
+                                setState(() {
+                                  downloadPressioned = false;
+                                });
+                              },
+                              onTapUp: (_) {
+                                setState(() {
+                                  downloadPressioned = false;
+                                });
+                              },
+                              child: downloadPressioned
+                                  ? Image.asset(
+                                      'assets/player_card/downloadButton_pressed.png')
+                                  : Image.asset(
+                                      'assets/player_card/downloadButton.png')),
                         ],
                       ),
                     ),
